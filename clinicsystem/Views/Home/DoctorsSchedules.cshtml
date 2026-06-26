@@ -1,0 +1,21 @@
+@{
+    ViewData["Title"] = "جداول الأطباء";
+}
+  <div class="container page-pad">
+    <div class="topbar">
+      <h2>جداول جميع الأطباء</h2>
+      <div class="actions">
+        <button class="btn btn-outline" onclick="goBackFromDoctorsSchedules()">الرجوع للخلف</button>
+      </div>
+    </div>
+
+    <section class="card">
+      <p class="muted">كل طبيب له عدد أيام محدد في الأسبوع وساعات محددة داخل اليوم.</p>
+      <div id="managerScheduleActions" class="actions" style="margin-top:.8rem; display:none;">
+        <button class="btn btn-primary" type="button" onclick="goTo('/add-schedule')">إضافة جدول جديد</button>
+        <button class="btn btn-outline" type="button" onclick="goTo('/edit-schedule')">تعديل جدول طبيب</button>
+      </div>
+      <div id="allDoctorsSchedulesPage" class="grid-2" style="margin-top: .8rem;"></div>
+    </section>
+  </div>
+

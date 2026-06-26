@@ -1,0 +1,161 @@
+@model clinicsystem.ViewModels.ReservationIndexVM
+@{
+    ViewData["Title"] = "حجز موعد";
+}
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="brand">🗓️ <span>الحجوزات</span></div>
+        <ul class="nav-list">
+            <li><a class="nav-link" href="/user-dashboard">لوحة المستخدم</a></li>
+            <li><a class="nav-link active" href="/reservation">حجز موعد</a></li>
+            <li><a class="nav-link" href="/reservation-info">ملخص الحجز</a></li>
+        </ul>
+    </aside>
+
+    <main class="main">
+        <div class="topbar">
+            <div>
+                <h2>حجز موعد جديد</h2>
+                <p class="muted">اختر الطبيب لتظهر مواعيده الحقيقية المتاحة فقط (من قاعدة البيانات).</p>
+            </div>
+            <div class="actions">
+                <a class="btn btn-outline" href="/user-dashboard">رجوع</a>
+            </div>
+        </div>
+
+        <section class="card">
+            <div class="grid-2">
+                <div>
+                    <label for="resSpecialty">التخصص</label>
+                    <select id="resSpecialty" class="form-control">
+                        <option value="">اختر التخصص</option>
+                        @foreach (var s in Model.Specialities)
+                        {
+                            <option value="@s.SpecialityId">@s.Name</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label for="resDoctor">الطبيب</label>
+                    <select id="resDoctor" class="form-control"><option value="">اختر الطبيب</option></select>
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-top:1rem;">
+                <div>
+                    <label for="resPatientName">اسم المريض</label>
+                    <input id="resPatientName" class="form-control" type="text" placeholder="الاسم" />
+                </div>
+                <div>
+                    <label for="resPatientPhone">رقم الهاتف</label>
+                    <input id="resPatientPhone" class="form-control" type="tel" placeholder="01000000000" />
+                </div>
+            </div>
+
+            <div id="resAvailability" style="margin-top:1rem;">
+                <p class="muted">اختر طبيباً لعرض أيامه وساعاته المتاحة.</p>
+            </div>
+            <p id="resMsg" class="footer-note"></p>
+
+            <div class="actions" style="margin-top: 1rem;">
+                <button id="resBookBtn" class="btn btn-primary" disabled>تأكيد الحجز</button>
+            </div>
+        </section>
+    </main>
+</div>
+
+@section Scripts {
+<script>
+(function () {
+    const specSel = document.getElementById('resSpecialty');
+    const docSel  = document.getElementById('resDoctor');
+    const avail   = document.getElementById('resAvailability');
+    const msg     = document.getElementById('resMsg');
+    const bookBtn = document.getElementById('resBookBtn');
+    const nameInp = document.getElementById('resPatientName');
+    const phoneInp= document.getElementById('resPatientPhone');
+    let selectedSlotId = null;
+
+    // prefill patient from prototype login data if present
+    try {
+        nameInp.value  = localStorage.getItem('userName')  || '';
+        phoneInp.value = localStorage.getItem('userPhone') || '';
+    } catch (e) {}
+
+    function resetDoctors() {
+        docSel.innerHTML = '<option value="">اختر الطبيب</option>';
+        avail.innerHTML = '<p class="muted">اختر طبيباً لعرض أيامه وساعاته المتاحة.</p>';
+        selectedSlotId = null;
+        bookBtn.disabled = true;
+    }
+
+    specSel.addEventListener('change', async () => {
+        resetDoctors();
+        if (!specSel.value) return;
+        const res = await fetch('/reservation/doctors?specialityId=' + encodeURIComponent(specSel.value));
+        const doctors = await res.json();
+        docSel.innerHTML = '<option value="">اختر الطبيب</option>' +
+            doctors.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+    });
+
+    docSel.addEventListener('change', async () => {
+        selectedSlotId = null;
+        bookBtn.disabled = true;
+        avail.innerHTML = '';
+        if (!docSel.value) { avail.innerHTML = '<p class="muted">اختر طبيباً.</p>'; return; }
+
+        const res = await fetch('/reservation/slots?doctorId=' + encodeURIComponent(docSel.value));
+        const days = await res.json();
+        if (!days.length) { avail.innerHTML = '<p class="muted">لا توجد مواعيد متاحة لهذا الطبيب.</p>'; return; }
+
+        avail.innerHTML = days.map(d => {
+            const slots = d.slots.map(s =>
+                `<button type="button" class="slot-btn" data-slot="${s.slotId}">${s.time}</button>`).join('');
+            return `<div class="schedule-box"><strong>${d.day}</strong><div class="slot-grid">${slots}</div></div>`;
+        }).join('');
+
+        avail.querySelectorAll('.slot-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                avail.querySelectorAll('.slot-btn').forEach(x => x.classList.remove('active'));
+                btn.classList.add('active');
+                selectedSlotId = parseInt(btn.dataset.slot, 10);
+                msg.textContent = 'تم اختيار الموعد: ' + btn.textContent;
+                bookBtn.disabled = false;
+            });
+        });
+    });
+
+    bookBtn.addEventListener('click', async () => {
+        if (!selectedSlotId) return;
+        if (!nameInp.value.trim() || !phoneInp.value.trim()) {
+            msg.textContent = 'من فضلك أدخل اسم المريض ورقم الهاتف.';
+            return;
+        }
+        bookBtn.disabled = true;
+        const res = await fetch('/reservation/book', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                slotId: selectedSlotId,
+                patientName: nameInp.value.trim(),
+                phone: phoneInp.value.trim(),
+                email: (localStorage.getItem('userEmail') || '')
+            })
+        });
+        const data = await res.json();
+        msg.textContent = data.message || '';
+        if (data.ok) {
+            try {
+                localStorage.setItem('lastReservation', JSON.stringify({
+                    doctor: docSel.options[docSel.selectedIndex].text,
+                    day: data.day, time: data.time
+                }));
+            } catch (e) {}
+            setTimeout(() => goTo('/reservation-info'), 700);
+        } else {
+            bookBtn.disabled = false;
+        }
+    });
+})();
+</script>
+}

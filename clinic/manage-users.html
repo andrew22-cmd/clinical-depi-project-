@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Users</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">🛠️ <span>Manager Panel</span></div>
+      <ul class="nav-list">
+        <li><a class="nav-link" href="manager-dashboard.html">Manage Doctors</a></li>
+        <li><a class="nav-link active" href="manage-users.html">Manage Users</a></li>
+        <li><a class="nav-link" href="doctors-schedules.html">Manage Schedule</a></li>
+        <li><a class="nav-link" href="view-reservations.html">View Reservations</a></li>
+        <li><a class="nav-link" href="manager-dashboard.html">Reports</a></li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h2>Manage Users</h2>
+          <p class="muted">قائمة المستخدمين (نموذج مبدئي).</p>
+        </div>
+        <div class="actions">
+          <button class="btn btn-outline" onclick="goTo('manager-dashboard.html')">الرجوع للخلف</button>
+        </div>
+      </div>
+
+      <section class="card">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>الاسم</th>
+                <th>البريد</th>
+                <th>الهاتف</th>
+                <th>الدور</th>
+                <th>الحالة</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>أحمد محمد</td><td>ahmed@clinic.com</td><td>01000000001</td><td>مستخدم</td><td><span class="badge">نشط</span></td></tr>
+              <tr><td>منى علي</td><td>mona@clinic.com</td><td>01000000002</td><td>مستخدم</td><td><span class="badge">نشط</span></td></tr>
+              <tr><td>د. جون إبراهيم</td><td>doctor.john@clinic.com</td><td>01000000003</td><td>طبيب</td><td><span class="badge">نشط</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+@{
+    ViewData["Title"] = "لوحة المدير";
+}
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">🛠️ <span>Manager Panel</span></div>
+      <ul class="nav-list">
+        <li><a class="nav-link active" href="/manager-dashboard">Manage Doctors</a></li>
+        <li><a class="nav-link" href="/manage-users">Manage Users</a></li>
+        <li><a class="nav-link" href="/doctors-schedules">Manage Schedule</a></li>
+        <li><a class="nav-link" href="/Specialities">Specialities</a></li>
+        <li><a class="nav-link" href="/view-reservations">View Reservations</a></li>
+        <li><a class="nav-link" href="/manager-dashboard">Reports</a></li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h2>Manager Control Panel</h2>
+          <p class="muted">إدارة الأطباء، السكرتارية، المستخدمين، والجداول.</p>
+        </div>
+        <div class="actions">
+          <a href="/manager-add-staff" class="btn btn-primary">Add new staff member</a>
+          <button class="btn btn-outline" onclick="logout()">Log out</button>
+        </div>
+      </div>
+
+      <section class="grid-3">
+        <div class="card"><h4>إجمالي المستخدمين</h4><div class="stat" id="statTotalUsers">0</div></div>
+        <div class="card"><h4>إجمالي الأطباء</h4><div class="stat" id="statTotalDoctors">0</div></div>
+        <div class="card"><h4>إجمالي السكرتارية</h4><div class="stat" id="statTotalSecretaries">0</div></div>
+      </section>
+
+      <section class="card" style="margin-top:1rem;">
+        <h3>Reports</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>البند</th>
+                <th>القيمة</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>حجوزات هذا الأسبوع</td><td id="reportWeeklyReservations">0</td></tr>
+              <tr><td>نسبة الإشغال</td><td id="reportOccupancy">0%</td></tr>
+              <tr><td>إجمالي الأطباء العاملين اليوم</td><td id="reportDoctorsToday">0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+

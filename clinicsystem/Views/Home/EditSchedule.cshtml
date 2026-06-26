@@ -1,0 +1,47 @@
+@{
+    ViewData["Title"] = "تعديل جدول طبيب";
+}
+  <div class="container page-pad" style="max-width:780px;">
+    <div class="topbar">
+      <h2>تعديل جدول طبيب</h2>
+      <div class="actions">
+        <button class="btn btn-outline" onclick="goTo('/doctors-schedules')">الرجوع للخلف</button>
+      </div>
+    </div>
+
+    <section class="card">
+      <form class="form-grid" onsubmit="updateDoctorSchedule(event)">
+        <label for="editDoctorSelect">اختر الطبيب</label>
+        <select id="editDoctorSelect" class="form-control" required></select>
+
+        <label for="editDoctorDay">اليوم</label>
+        <select id="editDoctorDay" class="form-control" required>
+          <option value="">اختر اليوم</option>
+          <option>السبت</option>
+          <option>الأحد</option>
+          <option>الإثنين</option>
+          <option>الثلاثاء</option>
+          <option>الأربعاء</option>
+          <option>الخميس</option>
+          <option>الجمعة</option>
+        </select>
+
+        <label for="editDoctorFrom">من</label>
+        <input id="editDoctorFrom" class="form-control" type="text" placeholder="مثال: 12:00 م" required>
+
+        <label for="editDoctorTo">إلى</label>
+        <input id="editDoctorTo" class="form-control" type="text" placeholder="مثال: 04:00 م" required>
+
+        <label for="editDoctorSlots">المواعيد المتاحة (اختياري، مفصولة بفواصل)</label>
+        <input id="editDoctorSlots" class="form-control" type="text" placeholder="12:00 م, 12:30 م, 01:00 م">
+
+        <div class="actions">
+          <button class="btn btn-primary" type="submit">تحديث الجدول</button>
+          <button class="btn btn-danger" type="button" onclick="deleteDoctorDaySchedule()">حذف معاد</button>
+          <button class="btn btn-danger" type="button" onclick="deleteDoctorCompletely()">حذف الطبيب بالكامل</button>
+        </div>
+      </form>
+      <p id="editScheduleMsg" class="footer-note"></p>
+    </section>
+  </div>
+

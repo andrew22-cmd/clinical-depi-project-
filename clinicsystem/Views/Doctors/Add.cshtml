@@ -1,0 +1,45 @@
+@model clinicsystem.ViewModels.AddScheduleVM
+@{
+    ViewData["Title"] = "إضافة جدول جديد";
+    var days = new[] { "السبت","الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة" };
+}
+<div class="container page-pad" style="max-width:780px;">
+    <div class="topbar">
+        <h2>إضافة جدول جديد</h2>
+        <div class="actions">
+            <a class="btn btn-outline" href="/doctors-schedules">الرجوع للخلف</a>
+        </div>
+    </div>
+
+    <section class="card">
+        <form class="form-grid" asp-action="Add" method="post">
+            @Html.AntiForgeryToken()
+
+            <label asp-for="Name">اسم الطبيب</label>
+            <input asp-for="Name" class="form-control" type="text" required />
+
+            <label asp-for="Speciality">التخصص</label>
+            <input asp-for="Speciality" class="form-control" type="text" required />
+
+            <label asp-for="Day">اليوم</label>
+            <select asp-for="Day" class="form-control" required>
+                <option value="">اختر اليوم</option>
+                @foreach (var dy in days) { <option value="@dy">@dy</option> }
+            </select>
+
+            <label asp-for="From">من</label>
+            <input asp-for="From" class="form-control" type="text" placeholder="مثال: 10:00 ص" required />
+
+            <label asp-for="To">إلى</label>
+            <input asp-for="To" class="form-control" type="text" placeholder="مثال: 02:00 م" required />
+
+            <label asp-for="SlotsCsv">المواعيد المتاحة (اختياري، مفصولة بفواصل — تُولَّد تلقائياً كل 30 دقيقة لو فاضية)</label>
+            <input asp-for="SlotsCsv" class="form-control" type="text" placeholder="10:00 ص, 10:30 ص, 11:00 ص" />
+
+            <div class="actions">
+                <button class="btn btn-primary" type="submit">حفظ الجدول</button>
+            </div>
+        </form>
+        @if (ViewBag.Error != null) { <p class="footer-note" style="color:#ff6b6b;">@ViewBag.Error</p> }
+    </section>
+</div>

@@ -1,0 +1,50 @@
+@{
+    ViewData["Title"] = "Add new staff member";
+}
+  <div class="container page-pad" style="max-width:760px;">
+    <div class="topbar">
+      <h2>Add new staff member</h2>
+      <div class="actions">
+        <button class="btn btn-outline" onclick="goTo('/manager-dashboard')">رجوع</button>
+      </div>
+    </div>
+
+    @if (TempData["Error"] != null){ <p class="footer-note" style="color:#ff6b6b;">@TempData["Error"]</p> }
+
+    <section class="card">
+      <h3>بيانات الموظف</h3>
+      <form class="form-grid" method="post" asp-controller="Doctors" asp-action="CreateStaff">
+        @Html.AntiForgeryToken()
+        <label for="Role">الدور الوظيفي (المسموح: طبيب أو سكرتير)</label>
+        <select id="Role" name="Role" class="form-control">
+          <option>طبيب</option>
+          <option>سكرتير</option>
+        </select>
+
+        <label for="Name">الاسم الكامل</label>
+        <input id="Name" name="Name" class="form-control" type="text" required>
+
+        <label for="Email">البريد الإلكتروني</label>
+        <input id="Email" name="Email" class="form-control" type="email" required>
+
+        <label for="Phone">رقم الهاتف</label>
+        <input id="Phone" name="Phone" class="form-control" type="tel" required>
+
+        <label for="Speciality">التخصص (للأطباء فقط)</label>
+        <input id="Speciality" name="Speciality" class="form-control" type="text" placeholder="مثال: باطنة" list="specList">
+        <datalist id="specList">
+          <option>باطنة</option>
+          <option>قلب</option>
+          <option>مخ وأعصاب</option>
+          <option>أطفال</option>
+          <option>عظام</option>
+        </datalist>
+
+        <div class="actions">
+          <button class="btn btn-outline" type="button" onclick="goTo('/manager-dashboard')">إلغاء</button>
+          <button class="btn btn-primary" type="submit">حفظ</button>
+        </div>
+      </form>
+    </section>
+  </div>
+

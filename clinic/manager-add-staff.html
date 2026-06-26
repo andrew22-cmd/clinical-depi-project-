@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add new staff member</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="container page-pad" style="max-width:760px;">
+    <div class="topbar">
+      <h2>Add new staff member</h2>
+      <div class="actions">
+        <button class="btn btn-outline" onclick="goTo('manager-dashboard.html')">رجوع</button>
+      </div>
+    </div>
+
+    <section class="card">
+      <h3>بيانات الموظف</h3>
+      <form class="form-grid" onsubmit="event.preventDefault()">
+        <label for="staffRole">الدور الوظيفي (المسموح: طبيب أو سكرتير)</label>
+        <select id="staffRole" class="form-control">
+          <option>طبيب</option>
+          <option>سكرتير</option>
+        </select>
+
+        <label for="staffName">الاسم الكامل</label>
+        <input id="staffName" class="form-control" type="text" required>
+
+        <label for="staffEmail">البريد الإلكتروني</label>
+        <input id="staffEmail" class="form-control" type="email" required>
+
+        <label for="staffPhone">رقم الهاتف</label>
+        <input id="staffPhone" class="form-control" type="tel" required>
+
+        <label for="staffSpec">التخصص (للأطباء فقط)</label>
+        <select id="staffSpec" class="form-control">
+          <option>باطنة</option>
+          <option>قلب</option>
+          <option>مخ وأعصاب</option>
+          <option>أطفال</option>
+          <option>عظام</option>
+        </select>
+
+        <div class="actions">
+          <button class="btn btn-outline" type="button" onclick="goTo('manager-dashboard.html')">إلغاء</button>
+          <button class="btn btn-primary" type="submit">حفظ</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

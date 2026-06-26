@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تفاصيل المرضى - الطبيب</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="container page-pad" style="max-width:900px;">
+    <div class="topbar">
+      <h2>كتابة تفاصيل المرضى</h2>
+      <div class="actions">
+        <button class="btn btn-outline" onclick="goTo('doctor-dashboard.html')">رجوع</button>
+        <button class="btn btn-outline" onclick="logout()">Log out</button>
+      </div>
+    </div>
+
+    <section class="card">
+      <form class="form-grid" onsubmit="event.preventDefault()">
+        <label for="patientName">اسم المريض</label>
+        <input id="patientName" class="form-control" type="text" placeholder="أدخل اسم المريض">
+
+        <label for="visitDate">تاريخ الزيارة</label>
+        <input id="visitDate" class="form-control" type="date">
+
+        <label for="diagnosis">التشخيص</label>
+        <textarea id="diagnosis" rows="4" placeholder="اكتب التشخيص"></textarea>
+
+        <label for="notes">تفاصيل وملاحظات العلاج</label>
+        <textarea id="notes" rows="6" placeholder="اكتب تفاصيل حالة المريض..."></textarea>
+
+        <div class="actions">
+          <button class="btn btn-primary" type="submit">حفظ التفاصيل</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

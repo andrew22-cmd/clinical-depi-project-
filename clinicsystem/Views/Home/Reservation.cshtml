@@ -1,0 +1,46 @@
+@{
+    ViewData["Title"] = "حجز موعد";
+}
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">🗓️ <span>الحجوزات</span></div>
+      <ul class="nav-list">
+        <li><a class="nav-link" href="/user-dashboard">لوحة المستخدم</a></li>
+        <li><a class="nav-link active" href="/reservation">حجز موعد</a></li>
+        <li><a class="nav-link" href="/reservation-info">ملخص الحجز</a></li>
+      </ul>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h2>حجز موعد جديد</h2>
+          <p class="muted">اختر الطبيب لتظهر مواعيده الحقيقية فقط (أيام + ساعات الطبيب).</p>
+        </div>
+        <div class="actions">
+          <button class="btn btn-outline" onclick="goTo('/user-dashboard')">رجوع</button>
+        </div>
+      </div>
+
+      <section class="card">
+        <div class="grid-2">
+          <div>
+            <label for="specialtySelect">التخصص</label>
+            <select id="specialtySelect" class="form-control"></select>
+          </div>
+          <div>
+            <label for="doctorSelect">الطبيب</label>
+            <select id="doctorSelect" class="form-control"></select>
+          </div>
+        </div>
+
+        <div id="doctorAvailability" style="margin-top:1rem;"></div>
+        <p id="reservationMsg" class="footer-note"></p>
+
+        <div class="actions" style="margin-top: 1rem;">
+          <button id="bookBtn" class="btn btn-primary" disabled>تأكيد الحجز</button>
+        </div>
+      </section>
+    </main>
+  </div>
+

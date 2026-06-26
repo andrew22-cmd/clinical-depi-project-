@@ -378,13 +378,13 @@ namespace clinicsystem.Migrations
                     b.HasOne("clinicsystem.Models.Doctor", "Doctor")
                         .WithMany("Reservations")
                         .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("clinicsystem.Models.Patient", "Patient")
                         .WithMany("Reservations")
                         .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("clinicsystem.Models.DoctorScheduleSlot", "Slot")

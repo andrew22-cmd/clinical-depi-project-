@@ -1,0 +1,55 @@
+@model List<clinicsystem.Models.Speciality>
+@{
+    ViewData["Title"] = "التخصصات";
+}
+<div class="container page-pad">
+    <div class="topbar">
+        <h2>إدارة التخصصات</h2>
+        <div class="actions">
+            <a class="btn btn-primary" asp-action="Create">إضافة تخصص</a>
+            <a class="btn btn-outline" href="/manager-dashboard">الرجوع للوحة المدير</a>
+        </div>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <p class="footer-note" style="color:#ff6b6b;">@TempData["Error"]</p>
+    }
+
+    <section class="card">
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>التخصص</th>
+                        <th>عدد الأطباء</th>
+                        <th>إجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="3" class="muted">لا توجد تخصصات بعد.</td></tr>
+                }
+                @foreach (var s in Model)
+                {
+                    <tr>
+                        <td>@s.Name</td>
+                        <td><span class="badge">@(s.Doctors?.Count ?? 0)</span></td>
+                        <td>
+                            <div class="actions">
+                                <a class="btn btn-outline" asp-action="Edit" asp-route-id="@s.SpecialityId">تعديل</a>
+                                <form asp-action="Delete" asp-route-id="@s.SpecialityId" method="post" style="display:inline;"
+                                      onsubmit="return confirm('حذف التخصص @s.Name؟');">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-danger">حذف</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>

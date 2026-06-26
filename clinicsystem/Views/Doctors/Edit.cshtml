@@ -1,0 +1,53 @@
+@model clinicsystem.ViewModels.EditScheduleVM
+@{
+    ViewData["Title"] = "تعديل جدول طبيب";
+    var days = new[] { "السبت","الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة" };
+}
+<div class="container page-pad" style="max-width:780px;">
+    <div class="topbar">
+        <h2>تعديل جدول طبيب</h2>
+        <div class="actions">
+            <a class="btn btn-outline" href="/doctors-schedules">الرجوع للخلف</a>
+        </div>
+    </div>
+
+    @if (TempData["Error"] != null){ <p class="footer-note" style="color:#ff6b6b;">@TempData["Error"]</p> }
+
+    <section class="card">
+        <form class="form-grid" method="post">
+            @Html.AntiForgeryToken()
+
+            <label asp-for="DoctorId">اختر الطبيب</label>
+            <select asp-for="DoctorId" class="form-control" required>
+                <option value="">اختر الطبيب</option>
+                @foreach (var d in Model.Doctors)
+                {
+                    <option value="@d.DoctorId">@d.Label</option>
+                }
+            </select>
+
+            <label asp-for="Day">اليوم</label>
+            <select asp-for="Day" class="form-control" required>
+                <option value="">اختر اليوم</option>
+                @foreach (var dy in days) { <option value="@dy">@dy</option> }
+            </select>
+
+            <label asp-for="From">من</label>
+            <input asp-for="From" class="form-control" type="text" placeholder="مثال: 12:00 م" />
+
+            <label asp-for="To">إلى</label>
+            <input asp-for="To" class="form-control" type="text" placeholder="مثال: 04:00 م" />
+
+            <label asp-for="SlotsCsv">المواعيد المتاحة (اختياري، مفصولة بفواصل)</label>
+            <input asp-for="SlotsCsv" class="form-control" type="text" placeholder="12:00 م, 12:30 م, 01:00 م" />
+
+            <div class="actions">
+                <button class="btn btn-primary" type="submit" formaction="/edit-schedule/update">تحديث الجدول</button>
+                <button class="btn btn-danger" type="submit" formaction="/edit-schedule/delete-day"
+                        onclick="return confirm('حذف معاد هذا اليوم؟');">حذف معاد</button>
+                <button class="btn btn-danger" type="submit" formaction="/edit-schedule/delete-doctor"
+                        onclick="return confirm('حذف الطبيب بالكامل؟');">حذف الطبيب بالكامل</button>
+            </div>
+        </form>
+    </section>
+</div>

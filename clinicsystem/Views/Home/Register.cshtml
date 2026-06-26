@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "إنشاء حساب";
+}
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="logo-mark">🩺</div>
+      <h2 style="text-align:center; margin-bottom:1rem;">إنشاء حساب مستخدم</h2>
+
+      <form class="form-grid" onsubmit="handleRegister(event)">
+        <label for="regName">الاسم</label>
+        <input id="regName" class="form-control" type="text" required>
+
+        <label for="regPhone">رقم الهاتف</label>
+        <input id="regPhone" class="form-control" type="tel" required>
+
+        <label for="regEmail">البريد الإلكتروني</label>
+        <input id="regEmail" class="form-control" type="email" required>
+
+        <label for="regPassword">كلمة المرور</label>
+        <input id="regPassword" class="form-control" type="password" required>
+
+        <label for="regConfirmPassword">تأكيد كلمة المرور</label>
+        <input id="regConfirmPassword" class="form-control" type="password" required>
+
+        <label for="regRole">الدور</label>
+        <select id="regRole" class="form-control" disabled>
+          <option selected>مستخدم (Patient)</option>
+        </select>
+
+        <button class="btn btn-primary" type="submit">إنشاء الحساب</button>
+      </form>
+
+      <p id="registerMsg" class="footer-note"></p>
+
+      <p style="text-align:center; margin-top:1rem;">
+        لديك حساب؟ <a href="/login">تسجيل الدخول</a>
+      </p>
+    </div>
+  </div>

@@ -1,0 +1,26 @@
+@model clinicsystem.Models.Speciality
+@{
+    ViewData["Title"] = "تعديل تخصص";
+}
+<div class="container page-pad" style="max-width:560px;">
+    <div class="topbar">
+        <h2>تعديل التخصص</h2>
+        <div class="actions">
+            <a class="btn btn-outline" asp-action="Index">الرجوع للخلف</a>
+        </div>
+    </div>
+
+    <section class="card">
+        <form asp-action="Edit" asp-route-id="@Model.SpecialityId" method="post" class="form-grid">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="SpecialityId" />
+            <label asp-for="Name">اسم التخصص</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="footer-note" style="color:#ff6b6b;"></span>
+
+            <div class="actions">
+                <button type="submit" class="btn btn-primary">تحديث</button>
+            </div>
+        </form>
+    </section>
+</div>

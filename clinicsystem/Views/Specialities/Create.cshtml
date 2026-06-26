@@ -1,0 +1,25 @@
+@model clinicsystem.Models.Speciality
+@{
+    ViewData["Title"] = "إضافة تخصص";
+}
+<div class="container page-pad" style="max-width:560px;">
+    <div class="topbar">
+        <h2>إضافة تخصص جديد</h2>
+        <div class="actions">
+            <a class="btn btn-outline" asp-action="Index">الرجوع للخلف</a>
+        </div>
+    </div>
+
+    <section class="card">
+        <form asp-action="Create" method="post" class="form-grid">
+            @Html.AntiForgeryToken()
+            <label asp-for="Name">اسم التخصص</label>
+            <input asp-for="Name" class="form-control" placeholder="مثال: باطنة" />
+            <span asp-validation-for="Name" class="footer-note" style="color:#ff6b6b;"></span>
+
+            <div class="actions">
+                <button type="submit" class="btn btn-primary">حفظ</button>
+            </div>
+        </form>
+    </section>
+</div>

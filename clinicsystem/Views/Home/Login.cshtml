@@ -1,0 +1,30 @@
+@{
+    ViewData["Title"] = "تسجيل الدخول";
+}
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="logo-mark">🩺</div>
+      <h2 style="text-align:center; margin-bottom:1rem;">تسجيل الدخول</h2>
+      <p class="muted" style="text-align:center; margin-bottom:1rem;">الحقول المطلوبة: بريد/اسم مستخدم + كلمة المرور</p>
+
+      <form class="form-grid" onsubmit="handleLogin(event)">
+        <label for="loginIdentity">البريد الإلكتروني أو اسم المستخدم</label>
+        <input id="loginIdentity" class="form-control" type="text" placeholder="example@@clinic.com" required>
+
+        <label for="loginPassword">كلمة المرور</label>
+        <input id="loginPassword" class="form-control" type="password" placeholder="••••••••" required>
+
+        <button class="btn btn-primary" type="submit">دخول</button>
+      </form>
+
+      <p id="loginMsg" class="footer-note"></p>
+
+      <p style="text-align:center; margin-top:1rem;" class="muted">
+        ملاحظة تجريبية: manager@@ أو doctor@@ أو secretary@@ يفتح لوحة الدور مباشرة.
+      </p>
+
+      <p style="text-align:center; margin-top:0.8rem;">
+        ليس لديك حساب؟ <a href="/register">إنشاء حساب مستخدم</a>
+      </p>
+    </div>
+  </div>

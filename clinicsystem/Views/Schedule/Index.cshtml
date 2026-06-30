@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "جداول الأطباء";
+    ViewData["ActivePage"] = "Schedule";
+}
+
+@section Sidebar {
+    @await Html.PartialAsync("_ManagerSidebar")
+}
+
+<div class="topbar">
+    <h2>جداول جميع الأطباء</h2>
+    <div class="actions">
+        <button class="btn btn-outline" onclick="goBackFromDoctorsSchedules()">الرجوع للخلف</button>
+    </div>
+</div>
+
+<section class="card">
+    <p class="muted">كل طبيب له عدد أيام محدد في الأسبوع وساعات محددة داخل اليوم.</p>
+    <div id="managerScheduleActions" class="actions" style="margin-top:.8rem; display:none;">
+        <a class="btn btn-primary" asp-controller="Schedule" asp-action="Add">إضافة جدول جديد</a>
+        <a class="btn btn-outline" asp-controller="Schedule" asp-action="Edit">تعديل جدول طبيب</a>
+    </div>
+    <div id="allDoctorsSchedulesPage" class="grid-2" style="margin-top: .8rem;"></div>
+</section>

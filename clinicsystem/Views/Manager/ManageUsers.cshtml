@@ -1,0 +1,38 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "Manage Users";
+    ViewData["ActivePage"] = "ManageUsers";
+}
+
+@section Sidebar {
+    @await Html.PartialAsync("_ManagerSidebar")
+}
+
+<div class="topbar">
+    <div>
+        <h2>Manage Users</h2>
+        <p class="muted">قائمة المستخدمين (نموذج مبدئي).</p>
+    </div>
+    <div class="actions">
+        <a class="btn btn-outline" asp-controller="Manager" asp-action="Dashboard">الرجوع للخلف</a>
+    </div>
+</div>
+
+<section class="card">
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>الاسم</th><th>البريد</th><th>الهاتف</th><th>الدور</th><th>الحالة</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>أحمد محمد</td><td>ahmed@clinic.com</td><td>01000000001</td><td>مستخدم</td><td><span class="badge">نشط</span></td></tr>
+                <tr><td>منى علي</td><td>mona@clinic.com</td><td>01000000002</td><td>مستخدم</td><td><span class="badge">نشط</span></td></tr>
+                <tr><td>د. جون إبراهيم</td><td>doctor.john@clinic.com</td><td>01000000003</td><td>طبيب</td><td><span class="badge">نشط</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>

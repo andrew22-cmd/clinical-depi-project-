@@ -1,0 +1,25 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "تأكيد الحجز";
+}
+
+<div class="auth-wrapper">
+    <div class="auth-card" style="text-align:center;">
+        <div class="logo-mark" style="font-size: 3rem;">📧</div>
+        <h2>تم إرسال البريد الإلكتروني بنجاح</h2>
+        <p class="muted">تم إرسال إشعار التأكيد للحجز إلى بريدك الإلكتروني.</p>
+
+        <div class="card" style="text-align:right; margin-top:1rem;">
+            <h4>ملخص الرسالة</h4>
+            <p class="muted">تم تأكيد الموعد وسيصلك تذكير قبل وقت الحجز.</p>
+        </div>
+
+        <div class="actions" style="justify-content:center; margin-top:1rem;">
+            <a class="btn btn-primary" asp-controller="Patient" asp-action="Dashboard">العودة للوحة المستخدم</a>
+        </div>
+    </div>
+</div>

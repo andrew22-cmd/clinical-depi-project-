@@ -1,0 +1,53 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "الملف الشخصي";
+    ViewData["ActivePage"] = "Details";
+}
+
+@section Sidebar {
+    @await Html.PartialAsync("_PatientSidebar")
+}
+
+<div class="topbar">
+    <div>
+        <h2>الملف الشخصي</h2>
+        <p class="muted">بعد التسجيل يتم فتح هذه الصفحة مباشرة.</p>
+    </div>
+    <div class="actions">
+        <a class="btn btn-outline" asp-controller="Patient" asp-action="Dashboard">لوحة المستخدم</a>
+        <button class="btn btn-outline" onclick="logout()">Log out</button>
+    </div>
+</div>
+
+<section class="grid-2">
+    <div class="card">
+        <h3>بيانات المستخدم</h3>
+        <p><strong>Name:</strong> <span data-user-name>مستخدم جديد</span></p>
+        <p><strong>Phone:</strong> <span data-user-phone>01000000000</span></p>
+        <p><strong>Email:</strong> <span data-user-email>user@clinic.com</span></p>
+    </div>
+
+    <div class="card">
+        <h3>Doctor's details</h3>
+        <p><strong>الطبيب:</strong> د. جون إبراهيم</p>
+        <p><strong>التخصص:</strong> باطنة</p>
+        <p><strong>أيام المتابعة:</strong> الثلاثاء والخميس</p>
+        <p><strong>الوقت:</strong> 10:00 ص - 12:00 م</p>
+    </div>
+</section>
+
+<section class="card" style="margin-top:1rem;">
+    <h3>Reservation details</h3>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>الطبيب</th><th>اليوم</th><th>الوقت</th><th>المصدر</th></tr>
+            </thead>
+            <tbody id="userReservationHistory"></tbody>
+        </table>
+    </div>
+</section>

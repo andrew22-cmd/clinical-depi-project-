@@ -1,0 +1,43 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "حجز موعد";
+    ViewData["ActivePage"] = "Reservation";
+}
+
+@section Sidebar {
+    @await Html.PartialAsync("_PatientSidebar")
+}
+
+<div class="topbar">
+    <div>
+        <h2>حجز موعد جديد</h2>
+        <p class="muted">اختر الطبيب لتظهر مواعيده الحقيقية فقط (أيام + ساعات الطبيب).</p>
+    </div>
+    <div class="actions">
+        <a class="btn btn-outline" asp-controller="Patient" asp-action="Dashboard">رجوع</a>
+    </div>
+</div>
+
+<section class="card">
+    <div class="grid-2">
+        <div>
+            <label for="specialtySelect">التخصص</label>
+            <select id="specialtySelect" class="form-control"></select>
+        </div>
+        <div>
+            <label for="doctorSelect">الطبيب</label>
+            <select id="doctorSelect" class="form-control"></select>
+        </div>
+    </div>
+
+    <div id="doctorAvailability" style="margin-top:1rem;"></div>
+    <p id="reservationMsg" class="footer-note"></p>
+
+    <div class="actions" style="margin-top: 1rem;">
+        <button id="bookBtn" class="btn btn-primary" disabled>تأكيد الحجز</button>
+    </div>
+</section>

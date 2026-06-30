@@ -1,0 +1,64 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "لوحة المريض";
+    ViewData["ActivePage"] = "Dashboard";
+}
+
+@section Sidebar {
+    @await Html.PartialAsync("_PatientSidebar")
+}
+
+<div class="topbar">
+    <div>
+        <h2>أهلاً <span data-user-name>مستخدم جديد</span></h2>
+        <p class="muted">إدارة الحجوزات والملف الشخصي</p>
+    </div>
+    <div class="actions">
+        <a class="btn btn-primary" asp-controller="Reservation" asp-action="Index">Book Appointment</a>
+        <button class="btn btn-outline" onclick="logout()">Log out</button>
+    </div>
+</div>
+
+<section class="grid-3">
+    <div class="card">
+        <h3>الملف الشخصي</h3>
+        <p><strong>الاسم:</strong> <span data-user-name>مستخدم جديد</span></p>
+        <p><strong>الهاتف:</strong> <span data-user-phone>01000000000</span></p>
+        <p><strong>البريد:</strong> <span data-user-email>user@clinic.com</span></p>
+    </div>
+
+    <div class="card">
+        <h3>تفاصيل الطبيب المتابع</h3>
+        <p><strong>الطبيب:</strong> د. جون إبراهيم</p>
+        <p><strong>التخصص:</strong> باطنة</p>
+        <p><strong>الموعد الأسبوعي:</strong> الثلاثاء 12:00 م - 4:00 م</p>
+    </div>
+
+    <div class="card">
+        <h3>إحصائياتك</h3>
+        <div class="stat">3</div>
+        <p class="muted">إجمالي الحجوزات المسجلة</p>
+    </div>
+</section>
+
+<section class="card" style="margin-top: 1rem;">
+    <h3>سجل الحجوزات</h3>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>الطبيب</th><th>اليوم</th><th>الوقت</th><th>المصدر</th></tr>
+            </thead>
+            <tbody id="userReservationHistory"></tbody>
+        </table>
+    </div>
+</section>
+
+<section class="card" style="margin-top: 1rem;">
+    <h3>جداول كل الأطباء</h3>
+    <p class="muted">عرض الأيام والساعات المتاحة لكل طبيب.</p>
+    <div id="allDoctorsSchedules" class="grid-2" style="margin-top: .8rem;"></div>
+</section>

@@ -1,0 +1,43 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "View Reservations";
+    ViewData["ActivePage"] = "Reservations";
+}
+
+@section Sidebar {
+    @await Html.PartialAsync("_ManagerSidebar")
+}
+
+<div class="topbar">
+    <div>
+        <h2>حجوزات اليوم</h2>
+        <p class="muted">عرض الحجوزات حسب التاريخ المختار (يمكن اختيار أمس/اليوم/غداً أو أي تاريخ).</p>
+    </div>
+    <div class="actions">
+        <a class="btn btn-outline" asp-controller="Manager" asp-action="Dashboard">الرجوع للخلف</a>
+    </div>
+</div>
+
+<section class="card" style="margin-bottom:1rem;">
+    <div class="actions">
+        <button class="btn btn-outline" type="button" onclick="shiftReservationDate(-1)">اليوم السابق</button>
+        <input id="reservationDateFilter" class="form-control" type="date" style="max-width:220px;" onchange="renderReservationsByDate()">
+        <button class="btn btn-outline" type="button" onclick="shiftReservationDate(1)">اليوم التالي</button>
+        <button class="btn btn-primary" type="button" onclick="setReservationFilterToday()">اليوم</button>
+    </div>
+</section>
+
+<section class="card">
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>المريض</th><th>الهاتف</th><th>الطبيب</th><th>اليوم</th><th>الوقت</th><th>المصدر</th></tr>
+            </thead>
+            <tbody id="reservationListByDateBody"></tbody>
+        </table>
+    </div>
+</section>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿@* <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -45,5 +45,37 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html> *@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Medical Clinic</title>
+    <link rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
+
+    @if (IsSectionDefined("Sidebar"))
+    {
+        <div class="app-shell">
+            <aside class="sidebar">
+                @RenderSection("Sidebar", required: false)
+            </aside>
+            <main class="main">
+                @RenderBody()
+            </main>
+        </div>
+    }
+    else
+    {
+        @RenderBody()
+    }
+
+    <script src="~/js/script.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

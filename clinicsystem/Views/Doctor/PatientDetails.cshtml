@@ -1,0 +1,41 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "تفاصيل المرضى - الطبيب";
+    ViewData["ActivePage"] = "PatientDetails";
+}
+
+@section Sidebar {
+    @await Html.PartialAsync("_DoctorSidebar")
+}
+
+<div class="topbar">
+    <h2>كتابة تفاصيل المرضى</h2>
+    <div class="actions">
+        <a class="btn btn-outline" asp-controller="Doctor" asp-action="Dashboard">رجوع</a>
+        <button class="btn btn-outline" onclick="logout()">Log out</button>
+    </div>
+</div>
+
+<section class="card">
+    <form class="form-grid" onsubmit="event.preventDefault()">
+        <label for="patientName">اسم المريض</label>
+        <input id="patientName" class="form-control" type="text" placeholder="أدخل اسم المريض">
+
+        <label for="visitDate">تاريخ الزيارة</label>
+        <input id="visitDate" class="form-control" type="date">
+
+        <label for="diagnosis">التشخيص</label>
+        <textarea id="diagnosis" rows="4" placeholder="اكتب التشخيص"></textarea>
+
+        <label for="notes">تفاصيل وملاحظات العلاج</label>
+        <textarea id="notes" rows="6" placeholder="اكتب تفاصيل حالة المريض..."></textarea>
+
+        <div class="actions">
+            <button class="btn btn-primary" type="submit">حفظ التفاصيل</button>
+        </div>
+    </form>
+</section>

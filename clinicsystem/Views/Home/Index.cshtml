@@ -1,8 +1,33 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿
 
-<div class="text-center">
+@* <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div> *@
+@{
+    ViewData["Title"] = "Medical Clinic Reservation System";
+}
+
+<div class="hero-wrapper">
+    <section class="hero">
+        <div class="logo-mark">🩺</div>
+        <h1>Medical Clinic Reservation System</h1>
+        <p>نظام حديث لإدارة حجوزات العيادة الطبية للمستخدمين والأطباء والسكرتارية والإدارة.</p>
+
+        <div class="grid-2" style="margin: 1rem 0 1.2rem;">
+            <div class="card">
+                <h3>حجز أسرع</h3>
+                <p class="muted">اختر الطبيب وستظهر مواعيده الفعلية حسب الأيام والساعات المتاحة فقط.</p>
+            </div>
+            <div class="card">
+                <h3>متابعة أسهل</h3>
+                <p class="muted">لوحات تحكم لكل دور مع واجهة داكنة حديثة ومتجاوبة.</p>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a class="btn btn-primary" asp-controller="Account" asp-action="Login">تسجيل الدخول</a>
+            <a class="btn btn-outline" asp-controller="Account" asp-action="Register">إنشاء حساب مستخدم</a>
+        </div>
+    </section>
 </div>

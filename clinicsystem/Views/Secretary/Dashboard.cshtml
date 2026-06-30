@@ -1,0 +1,81 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "لوحة السكرتير";
+    ViewData["ActivePage"] = "Dashboard";
+}
+
+@section Sidebar {
+    @await Html.PartialAsync("_SecretarySidebar")
+}
+
+<div class="topbar">
+    <div>
+        <h2>إدارة الحجوزات</h2>
+        <p class="muted">كل حجوزات المرضى الأونلاين تظهر هنا تلقائياً + إمكانية الحجز اليدوي.</p>
+    </div>
+    <button class="btn btn-outline" onclick="logout()">Log out</button>
+</div>
+
+<section class="grid-4">
+    <div class="card"><h4>Reservation counter</h4><div class="stat" id="reservationCounter">0</div></div>
+    <div class="card"><h4>حجوزات اليوم</h4><div class="stat">6</div></div>
+    <div class="card"><h4>أطباء فعالون</h4><div class="stat">4</div></div>
+    <div class="card"><h4>انتظار تأكيد</h4><div class="stat">2</div></div>
+</section>
+
+<section class="grid-2" style="margin-top:1rem;">
+    <div class="card">
+        <h3>Create reservation</h3>
+        <form class="form-grid" onsubmit="createSecretaryReservation(event)">
+            <label for="secPatientName">Patient name</label>
+            <input id="secPatientName" class="form-control" type="text" required>
+
+            <label for="secPatientPhone">Patient phone</label>
+            <input id="secPatientPhone" class="form-control" type="tel" required>
+
+            <label for="secDoctor">Doctor</label>
+            <select id="secDoctor" class="form-control" required>
+                <option value="">اختر الطبيب</option>
+                <option>د. جون إبراهيم</option>
+                <option>د. سارة جونسون</option>
+                <option>د. محمد علي</option>
+                <option>د. رنا سعد</option>
+            </select>
+
+            <label for="secDay">اليوم</label>
+            <input id="secDay" class="form-control" type="text" placeholder="مثال: الثلاثاء" required>
+
+            <label for="secTime">الوقت</label>
+            <input id="secTime" class="form-control" type="text" placeholder="مثال: 12:30 م" required>
+
+            <button type="submit" class="btn btn-primary">إضافة الحجز</button>
+        </form>
+        <p id="secMsg" class="footer-note"></p>
+    </div>
+
+    <div class="card">
+        <h3>تقويم مواعيد الأطباء القادمة</h3>
+        <div class="calendar-grid" style="margin-top: .8rem;">
+            <div class="day-card"><strong>د. جون</strong><p class="muted">الثلاثاء 12:00 م - 4:00 م</p></div>
+            <div class="day-card"><strong>د. سارة</strong><p class="muted">الإثنين 9:00 ص - 2:00 م</p></div>
+            <div class="day-card"><strong>د. محمد</strong><p class="muted">الأربعاء 11:00 ص - 3:00 م</p></div>
+            <div class="day-card"><strong>د. رنا</strong><p class="muted">السبت 2:00 م - 6:00 م</p></div>
+        </div>
+    </div>
+</section>
+
+<section class="card" style="margin-top:1rem;">
+    <h3>Reservation list (includes online booking)</h3>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>المريض</th><th>الهاتف</th><th>الطبيب</th><th>اليوم</th><th>الوقت</th><th>المصدر</th></tr>
+            </thead>
+            <tbody id="bookingListBody"></tbody>
+        </table>
+    </div>
+</section>

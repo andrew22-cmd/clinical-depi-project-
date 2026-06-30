@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "Add new staff member";
+}
+
+<div class="container page-pad" style="max-width:760px;">
+    <div class="topbar">
+        <h2>Add new staff member</h2>
+        <div class="actions">
+            <a class="btn btn-outline" asp-controller="Manager" asp-action="Dashboard">رجوع</a>
+        </div>
+    </div>
+
+    <section class="card">
+        <h3>بيانات الموظف</h3>
+        <form class="form-grid" onsubmit="event.preventDefault()">
+            <label for="staffRole">الدور الوظيفي (المسموح: طبيب أو سكرتير)</label>
+            <select id="staffRole" class="form-control">
+                <option>طبيب</option>
+                <option>سكرتير</option>
+            </select>
+
+            <label for="staffName">الاسم الكامل</label>
+            <input id="staffName" class="form-control" type="text" required>
+
+            <label for="staffEmail">البريد الإلكتروني</label>
+            <input id="staffEmail" class="form-control" type="email" required>
+
+            <label for="staffPhone">رقم الهاتف</label>
+            <input id="staffPhone" class="form-control" type="tel" required>
+
+            <label for="staffSpec">التخصص (للأطباء فقط)</label>
+            <select id="staffSpec" class="form-control">
+                <option>باطنة</option>
+                <option>قلب</option>
+                <option>مخ وأعصاب</option>
+                <option>أطفال</option>
+                <option>عظام</option>
+            </select>
+
+            <div class="actions">
+                <a class="btn btn-outline" asp-controller="Manager" asp-action="Dashboard">إلغاء</a>
+                <button class="btn btn-primary" type="submit">حفظ</button>
+            </div>
+        </form>
+    </section>
+</div>

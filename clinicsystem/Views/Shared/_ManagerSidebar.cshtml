@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="brand">🛠️ <span>Manager Panel</span></div>
+<ul class="nav-list">
+    <li>
+        <a class="nav-link @(ViewData["ActivePage"]?.ToString() == "Dashboard" ? "active" : "")"
+           asp-controller="Manager" asp-action="Dashboard">Manage Doctors</a>
+    </li>
+    <li>
+        <a class="nav-link @(ViewData["ActivePage"]?.ToString() == "ManageUsers" ? "active" : "")"
+           asp-controller="Manager" asp-action="ManageUsers">Manage Users</a>
+    </li>
+    <li>
+        <a class="nav-link @(ViewData["ActivePage"]?.ToString() == "Schedule" ? "active" : "")"
+           asp-controller="Schedule" asp-action="Index">Manage Schedule</a>
+    </li>
+    <li>
+        <a class="nav-link @(ViewData["ActivePage"]?.ToString() == "Reservations" ? "active" : "")"
+           asp-controller="Manager" asp-action="ViewReservations">View Reservations</a>
+    </li>
+    <li>
+        <a class="nav-link @(ViewData["ActivePage"]?.ToString() == "Reports" ? "active" : "")"
+           asp-controller="Manager" asp-action="Dashboard">Reports</a>
+    </li>
+</ul>

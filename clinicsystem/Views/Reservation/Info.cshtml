@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "Reservation Summary";
+    ViewData["ActivePage"] = "ReservationInfo";
+}
+
+@section Sidebar {
+    @await Html.PartialAsync("_PatientSidebar")
+}
+
+<div class="topbar">
+    <h2>Reservation Summary</h2>
+    <div class="actions">
+        <a class="btn btn-outline" asp-controller="Reservation" asp-action="Index">تعديل</a>
+    </div>
+</div>
+
+<section class="card">
+    <h3>بيانات الحجز</h3>
+    <p><strong>Doctor:</strong> <span id="resDoctor">-</span></p>
+    <p><strong>Date:</strong> <span id="resDay">-</span></p>
+    <p><strong>Time:</strong> <span id="resTime">-</span></p>
+    <p><strong>Payment info:</strong> <span class="muted">Placeholder - سيتم الربط لاحقاً.</span></p>
+
+    <div class="actions" style="margin-top: 1rem;">
+        <button class="btn btn-primary" onclick="goTo('@Url.Action("EmailNotification", "Reservation")')">إرسال التأكيد بالبريد</button>
+        <a class="btn btn-outline" asp-controller="Patient" asp-action="Dashboard">العودة للوحة المستخدم</a>
+    </div>
+</section>

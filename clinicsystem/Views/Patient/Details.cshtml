@@ -1,13 +1,13 @@
-﻿@*
+﻿@* 
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 *@
-@{
-}
+
+@model clinicsystem.ViewModels.UserViewModel
 @{
     ViewData["Title"] = "الملف الشخصي";
     ViewData["ActivePage"] = "Details";
 }
-
 @section Sidebar {
     @await Html.PartialAsync("_PatientSidebar")
 }
@@ -15,22 +15,25 @@
 <div class="topbar">
     <div>
         <h2>الملف الشخصي</h2>
-        <p class="muted">بعد التسجيل يتم فتح هذه الصفحة مباشرة.</p>
+        <p class="muted">بيانات حسابك في النظام.</p>
     </div>
     <div class="actions">
-        <a class="btn btn-outline" asp-controller="Patient" asp-action="Dashboard">لوحة المستخدم</a>
-        <button class="btn btn-outline" onclick="logout()">Log out</button>
+        <a class="btn btn-outline" asp-controller="Patient" asp-action="Dashboard">
+            لوحة المستخدم
+        </a>
+        <a class="btn btn-outline" asp-controller="Account" asp-action="Logout">
+            Log out
+        </a>
     </div>
 </div>
 
 <section class="grid-2">
     <div class="card">
         <h3>بيانات المستخدم</h3>
-        <p><strong>Name:</strong> <span data-user-name>مستخدم جديد</span></p>
-        <p><strong>Phone:</strong> <span data-user-phone>01000000000</span></p>
-        <p><strong>Email:</strong> <span data-user-email>user@clinic.com</span></p>
+        <p><strong>الاسم:</strong> @Model.FullName</p>
+        <p><strong>الهاتف:</strong> @(string.IsNullOrEmpty(Model.Phone) ? "-" : Model.Phone)</p>
+        <p><strong>البريد:</strong> @Model.Email</p>
     </div>
-
     <div class="card">
         <h3>Doctor's details</h3>
         <p><strong>الطبيب:</strong> د. جون إبراهيم</p>
@@ -45,7 +48,12 @@
     <div class="table-wrap">
         <table>
             <thead>
-                <tr><th>الطبيب</th><th>اليوم</th><th>الوقت</th><th>المصدر</th></tr>
+                <tr>
+                    <th>الطبيب</th>
+                    <th>اليوم</th>
+                    <th>الوقت</th>
+                    <th>المصدر</th>
+                </tr>
             </thead>
             <tbody id="userReservationHistory"></tbody>
         </table>

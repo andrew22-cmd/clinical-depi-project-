@@ -1,21 +1,23 @@
-﻿using System.Numerics;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace clinicsystem.Models
 {
-    public class User
+  
+    public class User : IdentityUser
     {
-        public int UserId { get; set; }
+   
+        public string FirstName { get; set; } = string.Empty;
 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
 
-        public string Email { get; set; }
-        public string Phone { get; set; }
+   
+        public string Role { get; set; } = "Patient";
 
-        public string Password { get; set; }
-        public string Role { get; set; }
+        [System.ComponentModel.DataAnnotations.Schema.NotMapped]
+        public string FullName => $"{FirstName} {LastName}".Trim();
 
-        // Navigation
+        // ── Navigation properties ────────────────────────────────────────────
+     
         public Doctor? Doctor { get; set; }
         public Patient? Patient { get; set; }
     }

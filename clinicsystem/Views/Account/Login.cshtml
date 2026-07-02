@@ -1,8 +1,8 @@
-﻿@*
+﻿@* 
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+   
+
+@model clinicsystem.ViewModels.LoginViewModel
 @{
     ViewData["Title"] = "تسجيل الدخول";
 }
@@ -11,26 +11,131 @@
     <div class="auth-card">
         <div class="logo-mark">🩺</div>
         <h2 style="text-align:center; margin-bottom:1rem;">تسجيل الدخول</h2>
-        <p class="muted" style="text-align:center; margin-bottom:1rem;">الحقول المطلوبة: بريد/اسم مستخدم + كلمة المرور</p>
 
-        <form class="form-grid" onsubmit="handleLogin(event)">
-            <label for="loginIdentity">البريد الإلكتروني أو اسم المستخدم</label>
-            <input id="loginIdentity" class="form-control" type="text" placeholder="example@clinic.com" required>
+        <form class="form-grid" asp-action="Login" asp-controller="Account" method="post">
+            @Html.AntiForgeryToken()
 
-            <label for="loginPassword">كلمة المرور</label>
-            <input id="loginPassword" class="form-control" type="password" placeholder="••••••••" required>
+            <div asp-validation-summary="All"
+                 class="footer-note" style="color:#e74c3c; margin-bottom:.5rem;"></div>
+
+            <label asp-for="Email">البريد الإلكتروني</label>
+            <input asp-for="Email" class="form-control" type="email"
+                   placeholder="manager@clinic.com" autocomplete="email" />
+            <span asp-validation-for="Email" class="footer-note" style="color:#e74c3c;"></span>
+
+            <label asp-for="Password">كلمة المرور</label>
+            <input asp-for="Password" class="form-control" type="password"
+                   placeholder="••••••••" autocomplete="current-password" />
+            <span asp-validation-for="Password" class="footer-note" style="color:#e74c3c;"></span>
+
+            <div style="display:flex; align-items:center; gap:.5rem;">
+                <input asp-for="RememberMe" type="checkbox" id="rememberMe" />
+                <label for="rememberMe" class="muted" style="margin:0;">تذكرني</label>
+            </div>
 
             <button class="btn btn-primary" type="submit">دخول</button>
         </form>
 
-        <p id="loginMsg" class="footer-note"></p>
-
-        <p style="text-align:center; margin-top:1rem;" class="muted">
-            ملاحظة تجريبية: manager@@ أو doctor@@ أو secretary@@ يفتح لوحة الدور مباشرة.
+        <p style="text-align:center; margin-top:.75rem;">
+            <a asp-controller="Account" asp-action="ForgotPassword"
+               class="muted" style="font-size:.875rem;">
+                نسيت كلمة المرور؟
+            </a>
         </p>
 
-        <p style="text-align:center; margin-top:0.8rem;">
-            ليس لديك حساب؟ <a asp-controller="Account" asp-action="Register">إنشاء حساب مستخدم</a>
+        <p class="muted" style="text-align:center; margin-top:.75rem; font-size:.82rem;">
+            أدوار الدخول التجريبي:<br />
+            manager@clinic.com · Manager*123 &nbsp;|&nbsp;
+            doctor@clinic.com · Doctor*123<br />
+            secretary@clinic.com · Secretary*123 &nbsp;|&nbsp;
+            patient@clinic.com · Patient*123
+        </p>
+
+        <p style="text-align:center; margin-top:.8rem;">
+            ليس لديك حساب؟
+            <a asp-controller="Account" asp-action="Register">إنشاء حساب مستخدم</a>
         </p>
     </div>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+} *@
+
+@* 
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    *@
+
+@model clinicsystem.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "تسجيل الدخول";
+}
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="logo-mark">🩺</div>
+        <h2 style="text-align:center; margin-bottom:1rem;">تسجيل الدخول</h2>
+
+        <form class="form-grid" asp-action="Login" asp-controller="Account" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="All"
+                 class="footer-note" style="color:#e74c3c; margin-bottom:.5rem;"></div>
+
+            @if (ViewBag.UnconfirmedEmail != null)
+            {
+                <p style="text-align:center; margin:-.25rem 0 .5rem;">
+                    <a asp-controller="Account" asp-action="ResendEmailConfirmation"
+                       asp-route-email="@ViewBag.UnconfirmedEmail">
+                        إعادة إرسال رابط التأكيد
+                    </a>
+                </p>
+            }
+
+            <label asp-for="Email">البريد الإلكتروني</label>
+            <input asp-for="Email" class="form-control" type="email"
+                   placeholder="manager@clinic.com" autocomplete="email" />
+            <span asp-validation-for="Email" class="footer-note" style="color:#e74c3c;"></span>
+
+            <label asp-for="Password">كلمة المرور</label>
+            <input asp-for="Password" class="form-control" type="password"
+                   placeholder="••••••••" autocomplete="current-password" />
+            <span asp-validation-for="Password" class="footer-note" style="color:#e74c3c;"></span>
+
+            <div style="display:flex; align-items:center; gap:.5rem;">
+                <input asp-for="RememberMe" type="checkbox" id="rememberMe" />
+                <label for="rememberMe" class="muted" style="margin:0;">تذكرني</label>
+            </div>
+
+            <button class="btn btn-primary" type="submit">دخول</button>
+        </form>
+
+        <p style="text-align:center; margin-top:.75rem;">
+            <a asp-controller="Account" asp-action="ForgotPassword"
+               class="muted" style="font-size:.875rem;">
+                نسيت كلمة المرور؟
+            </a>
+        </p>
+
+        <p class="muted" style="text-align:center; margin-top:.75rem; font-size:.82rem;">
+            أدوار الدخول التجريبي:<br />
+            manager@clinic.com · Manager*123 &nbsp;|&nbsp;
+            doctor@clinic.com · Doctor*123<br />
+            secretary@clinic.com · Secretary*123 &nbsp;|&nbsp;
+            patient@clinic.com · Patient*123
+        </p>
+
+        <p style="text-align:center; margin-top:.8rem;">
+            ليس لديك حساب؟
+            <a asp-controller="Account" asp-action="Register">إنشاء حساب مستخدم</a>
+        </p>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

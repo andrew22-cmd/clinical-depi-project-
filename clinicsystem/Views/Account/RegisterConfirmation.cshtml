@@ -1,0 +1,30 @@
+@{
+    ViewData["Title"] = "تأكيد البريد الإلكتروني";
+    var email = ViewBag.Email as string;
+    var message = ViewBag.Message as string ?? "تم إرسال رابط تأكيد إلى بريدك الإلكتروني.";
+}
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="logo-mark">📧</div>
+        <h2 style="text-align:center; margin-bottom:1rem;">تحقق من بريدك الإلكتروني</h2>
+
+        <p style="text-align:center;">@message</p>
+
+        @if (!string.IsNullOrEmpty(email))
+        {
+            <p class="muted" style="text-align:center; font-size:.9rem;">@email</p>
+        }
+
+        <p class="muted" style="text-align:center; margin-top:1rem; font-size:.85rem;">
+            لم تصلك الرسالة؟ تحقق من مجلد الرسائل غير المرغوب فيها (Spam)، أو
+            <a asp-controller="Account" asp-action="ResendEmailConfirmation" asp-route-email="@email">
+                أعد إرسال رابط التأكيد
+            </a>
+        </p>
+
+        <p style="text-align:center; margin-top:1.25rem;">
+            <a asp-controller="Account" asp-action="Login">العودة إلى تسجيل الدخول</a>
+        </p>
+    </div>
+</div>

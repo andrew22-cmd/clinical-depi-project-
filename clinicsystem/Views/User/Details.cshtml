@@ -1,0 +1,36 @@
+@model clinicsystem.ViewModels.UserViewModel
+@{
+    ViewData["Title"] = "تفاصيل المستخدم";
+}
+@section Sidebar {
+    @await Html.PartialAsync("_ManagerSidebar")
+}
+
+<div class="topbar">
+    <h2>تفاصيل المستخدم</h2>
+    <div class="actions">
+        <a class="btn btn-outline"
+           asp-controller="User" asp-action="Edit"
+           asp-route-id="@Model.Id">تعديل</a>
+        <a class="btn btn-outline" asp-controller="User" asp-action="Index">رجوع للقائمة</a>
+    </div>
+</div>
+
+<section class="card" style="max-width:560px;">
+    <div class="form-grid">
+        <label class="muted">الاسم الأول</label>
+        <p>@Model.FirstName</p>
+
+        <label class="muted">اسم العائلة</label>
+        <p>@Model.LastName</p>
+
+        <label class="muted">البريد الإلكتروني</label>
+        <p>@Model.Email</p>
+
+        <label class="muted">رقم الهاتف</label>
+        <p>@(string.IsNullOrEmpty(Model.Phone) ? "-" : Model.Phone)</p>
+
+        <label class="muted">الدور</label>
+        <p><span class="badge">@Model.Role</span></p>
+    </div>
+</section>

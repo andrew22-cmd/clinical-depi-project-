@@ -1,0 +1,37 @@
+@model clinicsystem.ViewModels.ConfirmEmailViewModel
+@{
+    ViewData["Title"] = "تأكيد البريد الإلكتروني";
+}
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="logo-mark">@(Model.Succeeded ? "✅" : "⚠️")</div>
+        <h2 style="text-align:center; margin-bottom:1rem;">
+            @(Model.Succeeded ? "تم التأكيد" : "تعذر التأكيد")
+        </h2>
+
+        <p style="text-align:center; @(Model.Succeeded ? "" : "color:#e74c3c;")">
+            @Model.Message
+        </p>
+
+        @if (Model.Succeeded)
+        {
+            <p style="text-align:center; margin-top:1.25rem;">
+                <a class="btn btn-primary" asp-controller="Account" asp-action="Login">تسجيل الدخول</a>
+            </p>
+        }
+        else
+        {
+            <p style="text-align:center; margin-top:1.25rem;">
+                <a class="btn btn-primary"
+                   asp-controller="Account" asp-action="ResendEmailConfirmation"
+                   asp-route-email="@Model.Email">
+                    طلب رابط تأكيد جديد
+                </a>
+            </p>
+            <p style="text-align:center; margin-top:.75rem;">
+                <a asp-controller="Account" asp-action="Login">العودة إلى تسجيل الدخول</a>
+            </p>
+        }
+    </div>
+</div>

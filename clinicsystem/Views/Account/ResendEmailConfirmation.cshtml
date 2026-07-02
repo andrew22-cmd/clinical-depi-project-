@@ -1,0 +1,39 @@
+@model clinicsystem.ViewModels.ResendEmailConfirmationViewModel
+@{
+    ViewData["Title"] = "إعادة إرسال رابط التأكيد";
+}
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="logo-mark">🩺</div>
+        <h2 style="text-align:center; margin-bottom:1rem;">إعادة إرسال رابط التأكيد</h2>
+
+        <p class="muted" style="text-align:center; margin-bottom:1rem; font-size:.9rem;">
+            أدخل بريدك الإلكتروني وسنرسل لك رابط تأكيد جديد إذا كان حسابك غير مؤكد بعد.
+        </p>
+
+        <form class="form-grid" asp-action="ResendEmailConfirmation" asp-controller="Account" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="All"
+                 class="footer-note" style="color:#e74c3c; margin-bottom:.5rem;"></div>
+
+            <label asp-for="Email">البريد الإلكتروني</label>
+            <input asp-for="Email" class="form-control" type="email"
+                   placeholder="example@gmail.com" autocomplete="email" />
+            <span asp-validation-for="Email" class="footer-note" style="color:#e74c3c;"></span>
+
+            <button class="btn btn-primary" type="submit">إرسال الرابط</button>
+        </form>
+
+        <p style="text-align:center; margin-top:1rem;">
+            <a asp-controller="Account" asp-action="Login">العودة إلى تسجيل الدخول</a>
+        </p>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

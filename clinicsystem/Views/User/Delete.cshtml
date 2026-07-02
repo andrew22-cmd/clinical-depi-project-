@@ -1,0 +1,47 @@
+@model clinicsystem.ViewModels.UserViewModel
+@{
+    ViewData["Title"] = "حذف المستخدم";
+}
+@section Sidebar {
+    @await Html.PartialAsync("_ManagerSidebar")
+}
+
+<div class="topbar">
+    <h2>تأكيد حذف المستخدم</h2>
+    <div class="actions">
+        <a class="btn btn-outline" asp-controller="User" asp-action="Index">رجوع للقائمة</a>
+    </div>
+</div>
+
+<section class="card" style="max-width:560px;">
+    <div class="card" style="border-right: 4px solid #e74c3c; margin-bottom:1.5rem;">
+        <p style="margin:0; color:#e74c3c;">
+            ⚠️ هل أنت متأكد من حذف هذا المستخدم؟ لا يمكن التراجع عن هذا الإجراء.
+        </p>
+    </div>
+
+    <div class="form-grid" style="margin-bottom:1.5rem;">
+        <label class="muted">الاسم الكامل</label>
+        <p>@Model.FirstName @Model.LastName</p>
+
+        <label class="muted">البريد الإلكتروني</label>
+        <p>@Model.Email</p>
+
+        <label class="muted">رقم الهاتف</label>
+        <p>@(string.IsNullOrEmpty(Model.Phone) ? "-" : Model.Phone)</p>
+
+        <label class="muted">الدور</label>
+        <p><span class="badge">@Model.Role</span></p>
+    </div>
+
+    <form asp-action="Delete" asp-controller="User"
+          asp-route-id="@Model.Id" method="post">
+        @Html.AntiForgeryToken()
+        <div class="actions">
+            <button type="submit" class="btn btn-danger">تأكيد الحذف</button>
+            <a class="btn btn-outline"
+               asp-controller="User" asp-action="Details"
+               asp-route-id="@Model.Id">إلغاء</a>
+        </div>
+    </form>
+</section>

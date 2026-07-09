@@ -1,0 +1,293 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة المدير</title>
+    <link rel="stylesheet" href="~/css/StyleSheet.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">🛠️ <span>Manager Panel</span></div>
+            <ul class="nav-list">
+                <li><a class="nav-link active" asp-controller="Manager" asp-action="DashBoard">Manage Doctors/secrtaires</a></li>
+                <li><a class="nav-link" asp-controller="Manager" asp-action="ManageUsers">Manage Users</a></li>
+                <li>
+                <li>
+                    <a class="nav-link" asp-controller="Manager" asp-action="DoctorsSchedules">
+                        Manage Schedule
+                    </a>
+                </li>
+                </li>
+          
+                <li>
+                    <a class="nav-link"
+                       asp-controller="Manager"
+                       asp-action="Reports">
+                        Reports
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="main">
+            <div class="topbar">
+                <div>
+                    <h2>Manager Control Panel</h2>
+                    <p class="muted">إدارة الأطباء، السكرتارية، المستخدمين، والجداول.</p>
+                </div>
+                <div class="actions">
+                    <a asp-controller="Manager" asp-action="AddStaff" class="btn btn-primary">Add new staff member</a>
+                    <button class="btn btn-outline" onclick="location.href='/Home/Home'">Log out</button>
+                </div>
+            </div>
+
+            <section class="grid-3">
+                <div class="card"><h4>إجمالي المستخدمين</h4><div class="stat" id="statTotalUsers">0</div></div>
+                <div class="card"><h4>إجمالي الأطباء</h4><div class="stat" id="statTotalDoctors">0</div></div>
+                <div class="card"><h4>إجمالي السكرتارية</h4><div class="stat" id="statTotalSecretaries">0</div></div>
+            </section>
+
+
+            <section class="card" style="margin-top:1rem;">
+                <h3>إدارة وتعديل الطاقم (Staff Management)</h3>
+                <p class="muted">عرض وتعديل بيانات الأطباء والسكرتارية المسجلين في النظام.</p>
+                <div class="table-wrap" style="margin-top: 1rem;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>الاسم</th>
+                                <th>الدور (Role)</th>
+                                <th>التخصص</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="staffTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="card" style="margin-top:1rem;">
+                <h3>قائمة أسعار الكشف</h3>
+                <div class="table-wrap" style="margin-top: 1rem;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>التخصص</th>
+                                <th>سعر الكشف</th>
+                            </tr>
+                        </thead>
+                        <tbody id="managerPriceListBody">
+                            <tr><td colspan="2" class="muted text-center">جاري التحميل...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ✅ Reports Section - Simple & Real -->
+            <section class="card" style="margin-top:1rem;">
+                <h3>📊 Reports</h3>
+                <p class="muted">إحصائيات الحجوزات والإيرادات الحقيقية.</p>
+
+                <!-- 4 كروت سريعة -->
+                <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin-top:1rem;">
+                    <div class="card" style="text-align:center; border:1px solid #e2e8f0; padding:1.2rem;">
+                        <h4 style="font-size:13px; color:var(--text-muted); margin-bottom:6px;">🗓️ حجوزات اليوم</h4>
+                        <div id="resToday" style="font-size:28px; font-weight:bold; color:var(--primary-color);">-</div>
+                    </div>
+                    <div class="card" style="text-align:center; border:1px solid #e2e8f0; padding:1.2rem;">
+                        <h4 style="font-size:13px; color:var(--text-muted); margin-bottom:6px;">📅 حجوزات الشهر</h4>
+                        <div id="resMonth" style="font-size:28px; font-weight:bold; color:var(--primary-color);">-</div>
+                    </div>
+                    <div class="card" style="text-align:center; border:1px solid #e2e8f0; padding:1.2rem;">
+                        <h4 style="font-size:13px; color:var(--text-muted); margin-bottom:6px;">💰 إيرادات اليوم</h4>
+                        <div id="revToday" style="font-size:22px; font-weight:bold; color:#10b981;">-</div>
+                    </div>
+                    <div class="card" style="text-align:center; border:1px solid #e2e8f0; padding:1.2rem;">
+                        <h4 style="font-size:13px; color:var(--text-muted); margin-bottom:6px;">💳 إيرادات الشهر</h4>
+                        <div id="revMonth" style="font-size:22px; font-weight:bold; color:#10b981;">-</div>
+                    </div>
+                </div>
+
+                <!-- جدول حجوزات كل تخصص -->
+                <h4 style="margin-top:1.5rem; margin-bottom:0.5rem;">📋 حجوزات حسب التخصص</h4>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>التخصص</th>
+                                <th>سعر الكشف</th>
+                                <th>إجمالي الحجوزات</th>
+                                <th>الإيرادات الإجمالية</th>
+                            </tr>
+                        </thead>
+                        <tbody id="specialityStatsBody">
+                            <tr><td colspan="4" class="muted">جاري التحميل...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="~/js/script.js" asp-append-version="true"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            loadDashboardStats();
+            loadStaffTable();
+            loadReportsStats();
+            loadManagerPriceList();
+        });
+
+        function loadManagerPriceList() {
+            fetch('/Patient/GetSpecialities')
+                .then(r => r.json())
+                .then(res => {
+                    const tbody = document.getElementById('managerPriceListBody');
+                    if(tbody) {
+                        tbody.innerHTML = '';
+                        if (res.success && res.data && res.data.length > 0) {
+                            res.data.forEach(item => {
+                                tbody.innerHTML += `
+                                    <tr>
+                                        <td style="font-weight: 500;">${item.name === 'General' ? 'عام' : item.name}</td>
+                                        <td style="color: #10b981; font-weight: bold;">${item.fee} EGP</td>
+                                    </tr>
+                                `;
+                            });
+                        } else {
+                            tbody.innerHTML = '<tr><td colspan="2" class="muted text-center">لا توجد بيانات حالياً</td></tr>';
+                        }
+                    }
+                })
+                .catch(err => {
+                    console.error('Error fetching manager prices', err);
+                });
+        }
+
+        // 1. جلب العدادات الحية وتحديث المربعات اللي فوق
+        function loadDashboardStats() {
+            fetch('/Manager/GetDashboardStats')
+                .then(response => response.json())
+                .then(res => {
+                    let data = res.data ? res.data : res;
+                    document.getElementById('statTotalUsers').innerText = data.totalUsers;
+                    document.getElementById('statTotalDoctors').innerText = data.totalDoctors;
+                    document.getElementById('statTotalSecretaries').innerText = data.totalSecretaries;
+                })
+                .catch(err => console.error('Error fetching stats:', err));
+        }
+
+        // تحميل إحصائيات الحجوزات والتقارير (الحجوزات والأرباح)
+        function loadReportsStats() {
+            fetch('/Manager/GetReservationStats')
+                .then(response => response.json())
+                .then(res => {
+                    if (res.success) {
+                        document.getElementById('resToday').innerText = res.resToday;
+                        document.getElementById('resMonth').innerText = res.resMonth;
+                        document.getElementById('revToday').innerText = res.revToday + ' EGP';
+                        document.getElementById('revMonth').innerText = res.revMonth + ' EGP';
+
+                        const tbody = document.getElementById('specialityStatsBody');
+                        tbody.innerHTML = '';
+                        
+                        if (res.bySpeciality && res.bySpeciality.length > 0) {
+                            res.bySpeciality.forEach(item => {
+                                tbody.innerHTML += `
+                                    <tr>
+                                        <td style="font-weight: bold;">${item.speciality === 'General' ? 'عام' : item.speciality}</td>
+                                        <td>${item.fee} EGP</td>
+                                        <td>${item.count}</td>
+                                        <td style="color: #10b981; font-weight: bold;">${item.revenue.toFixed(2)} EGP</td>
+                                    </tr>
+                                `;
+                            });
+                        } else {
+                            tbody.innerHTML = '<tr><td colspan="4" class="muted" style="text-align: center;">لا توجد بيانات حالياً</td></tr>';
+                        }
+                    }
+                })
+                .catch(err => console.error('Error fetching report stats:', err));
+        }
+
+        // 2. جلب قائمة الموظفين وترجمتها وعرضها في الجدول كلين
+        function loadStaffTable() {
+            fetch('/Manager/GetDoctorsList')
+                .then(response => response.json())
+                .then(res => {
+                    let data = res.data ? res.data : res;
+                    const tbody = document.getElementById('staffTableBody');
+                    tbody.innerHTML = ''; // تنظيف الجدول قبل الإضافة
+
+                    if(data.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;" class="muted">لا يوجد موظفين مسجلين حالياً</td></tr>';
+                        return;
+                    }
+
+                    data.forEach(item => {
+                        // ترجمة الأدوار والبيانات هنا في المتصفح لمنع الـ ???? نهائياً
+                        let roleBadge = item.role === "Doctor" || item.role === "طبيب"
+                            ? '<span class="badge" style="background-color: #e0f2fe; color: #0369a1; padding: 4px 8px; border-radius: 4px;">طبيب</span>'
+                            : '<span class="badge" style="background-color: #fef3c7; color: #b45309; padding: 4px 8px; border-radius: 4px;">سكرتارية</span>';
+
+                        let specialtyText = item.speciality === "General" ? "عام" : item.speciality;
+
+                        let row = `
+                            <tr>
+                                <td style="font-weight: 500;">${item.name}</td>
+                                <td>${roleBadge}</td>
+                                <td class="muted">${specialtyText}</td>
+                                <td>
+                                    <div style="display: flex; gap: 8px;">
+                                        <button class="btn btn-outline" style="padding: 4px 8px; font-size: 13px;" onclick="location.href='/Manager/EditStaff/${item.id}'">
+                                            تعديل
+                                        </button>
+                                        <button class="btn" style="background-color: #fee2e2; color: #ef4444; border: none; padding: 4px 8px; font-size: 13px;" onclick="deleteStaffMember(${item.id}, '${item.role}')">
+                                            حذف
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                        tbody.innerHTML += row;
+                    });
+                })
+                .catch(err => console.error('Error loading staff table:', err));
+        }
+
+        // 3. ميثود الحذف الذكي عند الضغط على زر حذف
+        function deleteStaffMember(id, role) {
+            if (confirm("هل أنت متأكد من رغبتك في حذف هذا الموظف؟")) {
+                fetch(`/Manager/DeleteStaff?id=${id}&role=${role}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        toastr.success(result.message || "تم الحذف بنجاح");
+                        loadDashboardStats(); // تحديث العدادات
+                        loadStaffTable();    // تحديث الجدول
+                    } else {
+                        toastr.error(result.message || "حدث خطأ أثناء محاولة الحذف.");
+                    }
+                })
+                .catch(err => console.error('Error deleting staff:', err));
+            }
+        }
+
+        // ميثود التنقل البديلة لو مش مكتوبة
+        function goTo(url) {
+            location.href = url;
+        }
+    </script>
+    <partial name="_ToastrScripts" />
+</body>
+</html>

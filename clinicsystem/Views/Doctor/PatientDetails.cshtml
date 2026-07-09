@@ -1,0 +1,46 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المرضى - الطبيب</title>
+    <link rel="stylesheet" href="~/css/StyleSheet.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="container page-pad" style="max-width:900px;">
+        <div class="topbar">
+            <h2>كتابة تفاصيل المرضى</h2>
+            <div class="actions">
+                <button class="btn btn-outline" onclick="goTo('/Doctor/DashBoard')">رجوع</button>
+                <button class="btn btn-outline" onclick="goTo('/Home/Home')">Log out</button>
+            </div>
+        </div>
+
+        <section class="card">
+            <form class="form-grid" onsubmit="saveDiagnosis(event)">
+                <label for="patientName">اسم المريض</label>
+                <select id="patientName" class="form-control"></select>
+
+                <label for="visitDate">تاريخ الزيارة</label>
+                <input id="visitDate" class="form-control" type="date">
+
+                <label for="diagnosis">التشخيص</label>
+                <textarea id="diagnosis" rows="4" placeholder="اكتب التشخيص"></textarea>
+
+                <label for="notes">تفاصيل وملاحظات العلاج</label>
+                <textarea id="notes" rows="6" placeholder="اكتب تفاصيل حالة المريض..."></textarea>
+
+                <div class="actions">
+                    <button class="btn btn-primary" type="submit">حفظ التفاصيل</button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <script src="~/js/script.js" asp-append-version="true"></script>
+    <partial name="_ToastrScripts" />
+</body>
+</html>

@@ -1,0 +1,134 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة المريض</title>
+    <link rel="stylesheet" href="~/css/StyleSheet.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">🩺 <span>لوحة المستخدم</span></div>
+            <ul class="nav-list">
+                <li><a class="nav-link active" asp-controller="Patient" asp-action="DashBoard">الرئيسية</a></li>
+                <li><a class="nav-link" asp-controller="Patient" asp-action="Details">الملف الشخصي</a></li>
+                <li><a class="nav-link" asp-controller="Patient" asp-action="Reservation">حجز موعد</a></li>
+            </ul>
+        </aside>
+
+        <main class="main">
+            <div class="topbar">
+                <div>
+                    <h2>أهلاً <span data-user-name>مستخدم جديد</span></h2>
+                    <p class="muted">إدارة الحجوزات والملف الشخصي</p>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-outline"
+                            onclick="goTo('/Home/Home')">
+                        Log out
+                    </button>
+                </div>
+            </div>
+
+            <section class="grid-2">
+                <div class="card">
+                    <h3>الملف الشخصي</h3>
+                    <p><strong>الاسم:</strong> <span data-user-name>مستخدم جديد</span></p>
+                    <p><strong>الهاتف:</strong> <span data-user-phone>01000000000</span></p>
+                    <p><strong>البريد:</strong> <span data-user-email>user@clinic.com</span></p>
+                </div>
+
+                <div class="card">
+                    <h3>إحصائياتك</h3>
+                    <div class="stat">3</div>
+                    <p class="muted">إجمالي الحجوزات المسجلة</p>
+                </div>
+            </section>
+
+            <section class="card" style="margin-top:1rem;">
+                <h3>تفاصيل الكشوفات السابقة</h3>
+                <div id="patientCheckupsHistory" style="margin-top: 1rem;">
+                    <p class="muted">لا توجد تفاصيل كشوفات سابقة حتى الآن.</p>
+                </div>
+            </section>
+
+            <section class="card" style="margin-top:1rem;">
+                <h3>قائمة الأسعار</h3>
+                <p class="muted">أسعار الكشف حسب التخصص</p>
+                <div class="table-wrap" style="margin-top: 1rem;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>التخصص</th>
+                                <th>سعر الكشف</th>
+                            </tr>
+                        </thead>
+                        <tbody id="priceListBody">
+                            <tr><td colspan="2" class="muted text-center">جاري التحميل...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="card" style="margin-top:20px">
+
+                <h3>جدول الأطباء</h3>
+
+                <table class="table">
+
+                    <thead>
+                        <tr>
+                            <th>Doctor</th>
+                            <th>Speciality</th>
+                            <th>Day</th>
+                            <th>From</th>
+                            <th>To</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="doctorScheduleBody">
+                    </tbody>
+
+                </table>
+
+            </section>
+        </main>
+    </div>
+
+    <script src="~/js/script.js" asp-append-version="true"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            loadPriceList();
+        });
+
+        function loadPriceList() {
+            fetch('/Patient/GetSpecialities')
+                .then(r => r.json())
+                .then(res => {
+                    const tbody = document.getElementById('priceListBody');
+                    tbody.innerHTML = '';
+                    if (res.success && res.data && res.data.length > 0) {
+                        res.data.forEach(item => {
+                            tbody.innerHTML += `
+                                <tr>
+                                    <td style="font-weight: 500;">${item.name === 'General' ? 'عام' : item.name}</td>
+                                    <td style="color: #10b981; font-weight: bold;">${item.fee} EGP</td>
+                                </tr>
+                            `;
+                        });
+                    } else {
+                        tbody.innerHTML = '<tr><td colspan="2" class="muted text-center">لا توجد بيانات حالياً</td></tr>';
+                    }
+                })
+                .catch(err => {
+                    console.error('Error fetching prices', err);
+                });
+        }
+    </script>
+    <partial name="_ToastrScripts" />
+</body>
+</html>

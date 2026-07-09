@@ -7,7 +7,9 @@
         public int DoctorId { get; set; }
 
         public string WeekDay { get; set; }
+        public TimeSpan StartTime { get; set; }  
 
+        public TimeSpan EndTime { get; set; }     
         public bool IsActive { get; set; }
 
         // Navigation

@@ -1,0 +1,61 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إضافة جدول جديد</title>
+    <link rel="stylesheet" href="~/css/StyleSheet.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="container page-pad" style="max-width:780px;">
+        <div class="topbar">
+            <h2>إضافة جدول جديد</h2>
+            <div class="actions">
+                <button class="btn btn-outline" onclick="goTo('/Manager/DoctorsSchedules')">الرجوع للخلف</button>
+            </div>
+        </div>
+
+        <section class="card">
+            <form class="form-grid" onsubmit="addDoctorSchedule(event)">
+                <label for="newDoctorName">اسم الطبيب</label>
+                <input id="newDoctorName" class="form-control" type="text" required>
+
+                <label for="newDoctorSpecialty">التخصص</label>
+                <input id="newDoctorSpecialty" class="form-control" type="text" required>
+
+                <label for="newDoctorDay">اليوم</label>
+                <select id="newDoctorDay" class="form-control" required>
+                    <option value="">اختر اليوم</option>
+                    <option>السبت</option>
+                    <option>الأحد</option>
+                    <option>الإثنين</option>
+                    <option>الثلاثاء</option>
+                    <option>الأربعاء</option>
+                    <option>الخميس</option>
+                    <option>الجمعة</option>
+                </select>
+
+                <label for="newDoctorFrom">من</label>
+                <input id="newDoctorFrom" class="form-control" type="text" placeholder="مثال: 10:00 ص" required>
+
+                <label for="newDoctorTo">إلى</label>
+                <input id="newDoctorTo" class="form-control" type="text" placeholder="مثال: 02:00 م" required>
+
+                <label for="newDoctorSlots">المواعيد المتاحة (اختياري، مفصولة بفواصل)</label>
+                <input id="newDoctorSlots" class="form-control" type="text" placeholder="10:00 ص, 10:30 ص, 11:00 ص">
+
+                <div class="actions">
+                    <button class="btn btn-primary" type="submit">حفظ الجدول</button>
+                </div>
+            </form>
+            <p id="addScheduleMsg" class="footer-note"></p>
+        </section>
+    </div>
+
+    <script src="~/js/script.js" asp-append-version="true"></script>
+    <partial name="_ToastrScripts" />
+</body>
+</html>

@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "إدارة المستخدمين";
+}
+
+<link rel="stylesheet" href="~/css/StyleSheet.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<div class="container-fluid py-4" style="background-color: #f4f6f9; min-height: 100vh; direction: rtl;">
+
+    <div class="p-4 text-white mb-4" style="background: linear-gradient(135deg, #1e3a8a, #2563eb); border-radius: 12px;">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div>
+                <h3 class="fw-bold m-0 fs-4">إدارة المستخدمين</h3>
+                <small class="text-white-50">عرض ومتابعة كافة الحسابات المسجلة على النظام (مرضى، أطباء، سكرتارية)</small>
+            </div>
+            <a href="/Manager/DashBoard" class="btn btn-light text-primary fw-bold btn-sm px-3 py-2" style="border-radius: 8px;">
+                <i class="fas fa-arrow-right me-1"></i> الرجوع للخلف
+            </a>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 p-4" style="border-radius: 12px; background: white;">
+        <div class="table-responsive">
+            <table class="table align-middle table-hover" style="direction: rtl;">
+                <thead class="table-light">
+                    <tr>
+                        <th>الاسم</th>
+                        <th>البريد الإلكتروني</th>
+                        <th>الهاتف</th>
+                        <th>الدور (الـ Role)</th>
+                        <th>الحالة</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">جاري تحميل الحسابات...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+@* <script>
+    console.log("ManageUsers page loaded");
+</script> *@
+
+<script src="~/js/script.js" asp-append-version="true"></script>
+@section Scripts {
+    <script src="~/js/script.js"></script>
+}

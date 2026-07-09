@@ -1,0 +1,38 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Info</title>
+    <link rel="stylesheet" href="~/css/StyleSheet.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="container page-pad" style="max-width:760px;">
+        <div class="topbar">
+            <h2>Reservation Summary</h2>
+            <div class="actions">
+                <button class="btn btn-outline" onclick="goTo('/Patient/Reservation')">تعديل</button>
+            </div>
+        </div>
+
+        <section class="card">
+            <h3>بيانات الحجز</h3>
+            <p><strong>Doctor:</strong> <span id="resDoctor">-</span></p>
+            <p><strong>Date:</strong> <span id="resDay">-</span></p>
+            <p><strong>Time:</strong> <span id="resTime">-</span></p>
+            <p><strong>Payment info:</strong> <span class="muted">Placeholder - سيتم الربط لاحقاً.</span></p>
+
+            <div class="actions" style="margin-top: 1rem;">
+                <button class="btn btn-primary" onclick="goTo('/Patient/EmailNotification')">إرسال التأكيد بالبريد</button>
+                <button class="btn btn-outline" onclick="goTo('/Patient/DashBoard')">العودة للوحة المستخدم</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="~/js/script.js" asp-append-version="true"></script>
+    <partial name="_ToastrScripts" />
+</body>
+</html>

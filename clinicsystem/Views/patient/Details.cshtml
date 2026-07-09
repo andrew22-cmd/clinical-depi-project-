@@ -1,0 +1,104 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+    <link rel="stylesheet" href="~/css/StyleSheet.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">🩺 <span>لوحة المستخدم</span></div>
+            <ul class="nav-list">
+                <li><a class="nav-link" asp-controller="Patient" asp-action="DashBoard">الرئيسية</a></li>
+                <li><a class="nav-link active" asp-controller="Patient" asp-action="Details">الملف الشخصي</a></li>
+                <li><a class="nav-link" asp-controller="Patient" asp-action="Reservation">حجز موعد</a></li>
+            </ul>
+        </aside>
+
+        <main class="main">
+            <div class="topbar">
+                <div>
+                    <h2>الملف الشخصي</h2>
+                    <p class="muted">بعد التسجيل يتم فتح هذه الصفحة مباشرة.</p>
+                </div>
+                <div class="actions">
+                   
+                </div>
+            </div>
+
+            <section>
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3 style="margin: 0;">بيانات المستخدم</h3>
+                        <button class="btn btn-outline" onclick="toggleEditProfile()" style="padding: 0.3rem 0.8rem; font-size: 0.9rem;">✏️ تعديل البيانات</button>
+                    </div>
+
+                    <div id="viewProfileData">
+                        <p><strong>Name:</strong> <span data-user-name>مستخدم جديد</span></p>
+                        <p><strong>Phone:</strong> <span data-user-phone>01000000000</span></p>
+                        <p><strong>Email:</strong> <span data-user-email>user@clinic.com</span></p>
+                    </div>
+
+                    <div id="editProfileForm" style="display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #ddd;">
+                        <div class="grid-2">
+                            <div>
+                                <label>الاسم</label>
+                                <input type="text" id="editNameInput" class="form-control">
+                            </div>
+                            <div>
+                                <label>رقم الهاتف</label>
+                                <input type="text" id="editPhoneInput" class="form-control">
+                            </div>
+                            <div style="grid-column: span 2;">
+                                <label>تغيير كلمة المرور (اختياري)</label>
+                                <input type="password" id="editPasswordInput" class="form-control" placeholder="أدخل كلمة مرور جديدة">
+                            </div>
+                        </div>
+                        <div class="actions" style="margin-top: 1rem;">
+                            <button class="btn btn-primary" onclick="savePersonalData()">حفظ التعديلات</button>
+                            <button class="btn btn-outline" onclick="toggleEditProfile()">إلغاء</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card" style="margin-top:1rem;">
+                <h3>سجل الحجوزات</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>الطبيب</th>
+                                <th>التخصص</th>
+                                <th>التاريخ</th>
+                                <th>اليوم</th>
+                                <th>الوقت</th>
+                                <th>المصدر</th>
+                                <th>سعر الكشف</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userReservationHistory"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="card" style="margin-top:1rem;">
+                <h3>تفاصيل الكشوفات السابقة</h3>
+                <div id="patientCheckupsHistory" style="margin-top: 1rem;">
+                    <p class="muted">لا توجد تفاصيل كشوفات سابقة حتى الآن.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="~/js/script.js" asp-append-version="true"></script>
+    <partial name="_ToastrScripts" />
+</body>
+</html>

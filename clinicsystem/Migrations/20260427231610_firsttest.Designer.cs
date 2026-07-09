@@ -11,7 +11,7 @@ using clinicsystem.Models;
 
 namespace clinicsystem.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(ClinicDbContext))]
     [Migration("20260427231610_firsttest")]
     partial class firsttest
     {

@@ -1,0 +1,156 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة السكرتير</title>
+    <link rel="stylesheet" href="~/css/StyleSheet.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">📋 <span>لوحة السكرتير</span></div>
+            <ul class="nav-list">
+                <li><a class="nav-link active" asp-controller="Secretary" asp-action="DashBoard">الحجوزات</a></li>
+              
+            </ul>
+        </aside>
+
+        <main class="main">
+            <div class="topbar">
+                <div>
+                    <h2>إدارة الحجوزات</h2>
+                    <p class="muted">كل حجوزات المرضى الأونلاين تظهر هنا تلقائياً + إمكانية الحجز اليدوي.</p>
+                </div>
+                <a href="/Account/Logout" class="btn btn-outline">Log out</a>
+            </div>
+
+            <section class="grid-4">
+
+                <div class="card">
+                    <h4>Reservation counter</h4>
+                    <div class="stat" id="reservationCounter">0</div>
+                </div>
+
+                <div class="card">
+                    <h4>حجوزات اليوم</h4>
+                    <div class="stat" id="todayReservationCounter">0</div>
+                </div>
+
+            <section class="card" style="margin-top:1rem;">
+                <h3>قائمة الأسعار</h3>
+                <div class="table-wrap" style="margin-top: 1rem;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>التخصص</th>
+                                <th>سعر الكشف</th>
+                            </tr>
+                        </thead>
+                        <tbody id="secPriceListBody">
+                            <tr><td colspan="2" class="muted text-center">جاري التحميل...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="grid-2" style="margin-top:1rem;">
+                <div class="card">
+                    <h3>Create reservation</h3>
+                    <form class="form-grid" onsubmit="createSecretaryReservation(event)">
+                        <label for="secPatientName">Patient name</label>
+                        <input id="secPatientName" class="form-control" type="text" required>
+
+                        <label for="secPatientPhone">Patient phone</label>
+                        <input id="secPatientPhone" class="form-control" type="tel" required>
+                        <label>التخصص</label>
+
+                        <select id="secSpeciality" class="form-control">
+                            <option value="">اختر التخصص</option>
+                        </select>
+
+                        <label>الطبيب</label>
+
+                        <select id="secDoctor" class="form-control">
+                            <option value="">اختر الطبيب</option>
+                        </select>
+                        <input type="date"
+                               id="secReservationDate"
+                               class="form-control">
+                     
+
+                        <div id="secretarySlots" style="margin-top:20px;"></div>
+                        <button type="submit" class="btn btn-primary">إضافة الحجز</button>
+                    </form>
+                    <p id="secMsg" class="footer-note"></p>
+                </div>
+
+                <div class="card">
+                    <h3>تقويم مواعيد الأطباء القادمة</h3>
+                    <div id="doctorSchedulesGrid"
+                         class="calendar-grid"
+                         style="margin-top:.8rem;">
+                    </div>
+                </div>
+            </section>
+
+            <section class="card" style="margin-top:1rem;">
+                <h3>Reservation list (includes online booking)</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>المريض</th>
+                                <th>الهاتف</th>
+                                <th>الطبيب</th>
+                                <th>اليوم</th>
+                                <th>الوقت</th>
+                                <th>المصدر</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingListBody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="~/js/script.js" asp-append-version="true"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            loadSecPriceList();
+        });
+
+        function loadSecPriceList() {
+            fetch('/Secretary/GetSpecialities')
+                .then(r => r.json())
+                .then(res => {
+                    const tbody = document.getElementById('secPriceListBody');
+                    if(tbody) {
+                        tbody.innerHTML = '';
+                        if (res.success && res.data && res.data.length > 0) {
+                            res.data.forEach(item => {
+                                tbody.innerHTML += `
+                                    <tr>
+                                        <td style="font-weight: 500;">${item.name === 'General' ? 'عام' : item.name}</td>
+                                        <td style="color: #10b981; font-weight: bold;">${item.fee} EGP</td>
+                                    </tr>
+                                `;
+                            });
+                        } else {
+                            tbody.innerHTML = '<tr><td colspan="2" class="muted text-center">لا توجد بيانات حالياً</td></tr>';
+                        }
+                    }
+                })
+                .catch(err => {
+                    console.error('Error fetching sec prices', err);
+                });
+        }
+    </script>
+    <partial name="_ToastrScripts" />
+</body>
+</html>

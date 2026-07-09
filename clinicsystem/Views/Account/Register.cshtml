@@ -1,0 +1,106 @@
+@model clinicsystem.ViewModels.RegisterViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب</title>
+
+    <link rel="stylesheet" href="~/css/StyleSheet.css" asp-append-version="true" />
+</head>
+
+<body>
+
+    <div class="auth-wrapper">
+        <div class="auth-card">
+
+            <div class="logo-mark">🩺</div>
+
+            <h2 style="text-align:center; margin-bottom:20px;">
+                إنشاء حساب جديد
+            </h2>
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success" style="
+            background:#d4edda;
+            color:#155724;
+            border:1px solid #c3e6cb;
+            padding:12px;
+            border-radius:8px;
+            margin-bottom:15px;
+            text-align:center;">
+                    @TempData["Success"]
+                </div>
+            }
+@if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    <div asp-validation-summary="ModelOnly"></div>
+                </div>
+            }
+            <form asp-controller="Account"
+                  asp-action="Register"
+                  method="post"
+                  class="form-grid">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+
+                <label asp-for="Phone"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+                <label>نوع الحساب</label>
+                <input type="text"
+                       class="form-control"
+                       value="Patient"
+                       readonly />
+
+                <button type="submit" class="btn btn-primary">
+                    إنشاء الحساب
+                </button>
+
+            </form>
+
+            <p style="text-align:center; margin-top:20px;">
+                لديك حساب بالفعل؟
+
+                <a asp-controller="Account"
+                   asp-action="Login">
+                    تسجيل الدخول
+                </a>
+            </p>
+
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+
+    <partial name="_ToastrScripts" />
+</body>
+</html>

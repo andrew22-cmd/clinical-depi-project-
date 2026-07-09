@@ -10,7 +10,7 @@ using clinicsystem.Models;
 
 namespace clinicsystem.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(ClinicDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -43,7 +43,7 @@ namespace clinicsystem.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Doctors");
+                    b.ToTable("Doctors", (string)null);
                 });
 
             modelBuilder.Entity("clinicsystem.Models.DoctorSchedule", b =>
@@ -57,8 +57,14 @@ namespace clinicsystem.Migrations
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("time");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
 
                     b.Property<string>("WeekDay")
                         .IsRequired()
@@ -68,7 +74,7 @@ namespace clinicsystem.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.ToTable("DoctorSchedules");
+                    b.ToTable("DoctorSchedules", (string)null);
                 });
 
             modelBuilder.Entity("clinicsystem.Models.DoctorScheduleSlot", b =>
@@ -95,7 +101,7 @@ namespace clinicsystem.Migrations
 
                     b.HasIndex("ScheduleId");
 
-                    b.ToTable("DoctorScheduleSlots");
+                    b.ToTable("DoctorScheduleSlots", (string)null);
                 });
 
             modelBuilder.Entity("clinicsystem.Models.EmailNotification", b =>
@@ -130,7 +136,7 @@ namespace clinicsystem.Migrations
 
                     b.HasIndex("ReservationId");
 
-                    b.ToTable("EmailNotifications");
+                    b.ToTable("EmailNotifications", (string)null);
                 });
 
             modelBuilder.Entity("clinicsystem.Models.Patient", b =>
@@ -161,7 +167,7 @@ namespace clinicsystem.Migrations
                         .IsUnique()
                         .HasFilter("[UserId] IS NOT NULL");
 
-                    b.ToTable("Patients");
+                    b.ToTable("Patients", (string)null);
                 });
 
             modelBuilder.Entity("clinicsystem.Models.PatientNotes", b =>
@@ -199,7 +205,7 @@ namespace clinicsystem.Migrations
 
                     b.HasIndex("ReservationId");
 
-                    b.ToTable("PatientNotes");
+                    b.ToTable("PatientNotes", (string)null);
                 });
 
             modelBuilder.Entity("clinicsystem.Models.Reservation", b =>
@@ -244,7 +250,7 @@ namespace clinicsystem.Migrations
 
                     b.HasIndex("SlotId");
 
-                    b.ToTable("Reservations");
+                    b.ToTable("Reservations", (string)null);
                 });
 
             modelBuilder.Entity("clinicsystem.Models.Speciality", b =>
@@ -261,7 +267,7 @@ namespace clinicsystem.Migrations
 
                     b.HasKey("SpecialityId");
 
-                    b.ToTable("Specialities");
+                    b.ToTable("Specialities", (string)null);
                 });
 
             modelBuilder.Entity("clinicsystem.Models.User", b =>
@@ -298,7 +304,7 @@ namespace clinicsystem.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("clinicsystem.Models.Doctor", b =>
@@ -378,13 +384,13 @@ namespace clinicsystem.Migrations
                     b.HasOne("clinicsystem.Models.Doctor", "Doctor")
                         .WithMany("Reservations")
                         .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("clinicsystem.Models.Patient", "Patient")
                         .WithMany("Reservations")
                         .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("clinicsystem.Models.DoctorScheduleSlot", "Slot")

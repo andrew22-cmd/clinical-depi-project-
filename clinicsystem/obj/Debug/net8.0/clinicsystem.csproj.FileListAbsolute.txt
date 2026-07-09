@@ -127,6 +127,7 @@ C:\Users\T14s\Desktop\depi project\clinicsystem\clinicsystem\obj\Debug\net8.0\cl
 C:\Users\T14s\Desktop\depi project\clinicsystem\clinicsystem\obj\Debug\net8.0\clinicsystem.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\T14s\Desktop\depi project\clinicsystem\clinicsystem\obj\Debug\net8.0\clinicsystem.RazorAssemblyInfo.cache
 C:\Users\T14s\Desktop\depi project\clinicsystem\clinicsystem\obj\Debug\net8.0\clinicsystem.RazorAssemblyInfo.cs
+C:\Users\T14s\Desktop\depi project\clinicsystem\clinicsystem\obj\Debug\net8.0\clinicsystem.sourcelink.json
 C:\Users\T14s\Desktop\depi project\clinicsystem\clinicsystem\obj\Debug\net8.0\rjimswa.dswa.cache.json
 C:\Users\T14s\Desktop\depi project\clinicsystem\clinicsystem\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 C:\Users\T14s\Desktop\depi project\clinicsystem\clinicsystem\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json

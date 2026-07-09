@@ -1,0 +1,64 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الطبيب</title>
+    <link rel="stylesheet" href="~/css/StyleSheet.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">🩺 <span>لوحة الطبيب</span></div>
+            <ul class="nav-list">
+                <li><a class="nav-link active" asp-controller="Doctor" asp-action="DashBoard">الجدول</a></li>
+                <li><a class="nav-link" asp-controller="Doctor" asp-action="PatientDetails">تفاصيل المرضى</a></li>
+            </ul>
+        </aside>
+
+        <main class="main">
+            <div class="topbar">
+                <div>
+                    <h2 id="doctorNameHeader">-</h2>
+                    <p id="doctorSummaryHeader" class="muted">-</p>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-outline" onclick="goTo('/Home/Home')">Log out</button>
+                </div>
+            </div>
+
+            
+
+            <section class="card" style="margin-top:1rem;">
+                <h3>الجدول الأسبوعي (شكل تقويمي)</h3>
+                <div id="doctorCalendarGrid" class="calendar-grid" style="margin-top: .8rem;"></div>
+            </section>
+
+            <section class="card" style="margin-top:1rem;">
+                <h3>قائمة المواعيد</h3>
+                <div class="card">
+                    <h3>مرضى اليوم</h3>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>المريض</th>
+                                <th>الهاتف</th>
+                                <th>الوقت</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="todayPatientsBody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="~/js/script.js" asp-append-version="true"></script>
+    <partial name="_ToastrScripts" />
+</body>
+</html>

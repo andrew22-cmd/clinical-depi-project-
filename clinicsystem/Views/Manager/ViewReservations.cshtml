@@ -1,0 +1,68 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Reservations</title>
+    <link rel="stylesheet" href="~/css/StyleSheet.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">🛠️ <span>Manager Panel</span></div>
+            <ul class="nav-list">
+                <li><a class="nav-link" asp-controller="Manager" asp-action="DashBoard">Manage Doctors</a></li>
+                <li><a class="nav-link" asp-controller="Manager" asp-action="ManageUsers">Manage Users</a></li>
+                <li><a class="nav-link" asp-controller="Manager" asp-action="DoctorsSchedules">Manage Schedule</a></li>
+                <li><a class="nav-link active" asp-controller="Manager" asp-action="ViewReservations">View Reservations</a></li>
+      
+            </ul>
+        </aside>
+
+        <main class="main">
+            <div class="topbar">
+                <div>
+                    <h2>حجوزات اليوم</h2>
+                    <p class="muted">عرض الحجوزات حسب التاريخ المختار (يمكن اختيار أمس/اليوم/غداً أو أي تاريخ).</p>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-outline" onclick="goTo('/Manager/DashBoard')">الرجوع للخلف</button>
+                </div>
+            </div>
+
+            <section class="card" style="margin-bottom:1rem;">
+                <div class="actions">
+                    <button class="btn btn-outline" type="button" onclick="shiftReservationDate(-1)">اليوم السابق</button>
+                    <input id="reservationDateFilter" class="form-control" type="date" style="max-width:220px;" onchange="renderReservationsByDate()">
+                    <button class="btn btn-outline" type="button" onclick="shiftReservationDate(1)">اليوم التالي</button>
+                    <button class="btn btn-primary" type="button" onclick="setReservationFilterToday()">اليوم</button>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>المريض</th>
+                                <th>الهاتف</th>
+                                <th>الطبيب</th>
+                                <th>اليوم</th>
+                                <th>الوقت</th>
+                                <th>المصدر</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reservationListByDateBody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="~/js/script.js" asp-append-version="true"></script>
+    <partial name="_ToastrScripts" />
+</body>
+</html>

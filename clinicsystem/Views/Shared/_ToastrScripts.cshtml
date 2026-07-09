@@ -1,0 +1,32 @@
+<!-- Toastr CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!-- Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": true,
+        "timeOut": "3500"
+    };
+</script>
+
+@if (TempData["Success"] != null)
+{
+    <script>toastr.success('@TempData["Success"]');</script>
+}
+@if (TempData["Error"] != null)
+{
+    <script>toastr.error('@TempData["Error"]');</script>
+}
+@if (TempData["Warning"] != null)
+{
+    <script>toastr.warning('@TempData["Warning"]');</script>
+}
+@if (TempData["Info"] != null)
+{
+    <script>toastr.info('@TempData["Info"]');</script>
+}

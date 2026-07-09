@@ -1,0 +1,107 @@
+@model clinicsystem.ViewModels.LoginViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول</title>
+
+    <link rel="stylesheet" href="~/css/StyleSheet.css" asp-append-version="true" />
+</head>
+
+<body>
+
+    <div class="auth-wrapper">
+
+        <div class="auth-card">
+
+            <div class="logo-mark">🩺</div>
+
+            <h2 style="text-align:center; margin-bottom:1rem;">
+                تسجيل الدخول
+            </h2>
+
+            <p class="muted" style="text-align:center; margin-bottom:1rem;">
+                أدخل البريد الإلكتروني وكلمة المرور
+            </p>
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger" style="margin-bottom: 1rem;">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    @if (ViewBag.UnconfirmedEmail != null)
+                    {
+                        <div style="margin-top: 10px; text-align: center;">
+                            <a asp-action="ResendEmailConfirmation" 
+                               asp-controller="Account" 
+                               asp-route-email="@ViewBag.UnconfirmedEmail"
+                               style="font-weight: bold; text-decoration: underline; color: inherit;">
+                                Resend Confirmation Email
+                            </a>
+                        </div>
+                    }
+                </div>
+            }
+            <form asp-controller="Account"
+                  asp-action="Login"
+                  method="post"
+                  class="form-grid">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <label asp-for="Email"></label>
+
+                <input asp-for="Email"
+                       class="form-control"
+                       placeholder="example@gmail.com" />
+
+                <span asp-validation-for="Email" class="text-danger"></span>
+
+
+                <label asp-for="Password"></label>
+
+                <input asp-for="Password"
+                       type="password"
+                       class="form-control"
+                       placeholder="********" />
+
+                <span asp-validation-for="Password" class="text-danger"></span>
+
+
+                <button class="btn btn-primary" type="submit">
+                    تسجيل الدخول
+                </button>
+                <div class="text-end mt-2">
+                    <a asp-action="ForgotPassword"
+                       asp-controller="Account"
+                       class="text-decoration-none">
+                        نسيت كلمة المرور؟
+                    </a>
+                </div>
+
+            </form>
+
+            <p style="text-align:center; margin-top:20px;">
+                ليس لديك حساب؟
+
+                <a asp-controller="Account"
+                   asp-action="Register">
+                    إنشاء حساب جديد
+                </a>
+            </p>
+
+        </div>
+
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+
+    <partial name="_ToastrScripts" />
+</body>
+
+</html>

@@ -177,7 +177,12 @@ private readonly IReservationService _reservationService;
         public async Task<IActionResult> GetReservations()
         {
 
-            var data = await _reservationService.GetAllAsync();
+            var allData = await _reservationService.GetAllAsync();
+            var data = allData
+                .Where(x => x.ReservationDate.Date >= DateTime.Today)
+                .OrderBy(x => x.ReservationDate.Date)
+                .ThenBy(x => x.Slot?.SlotTime)
+                .ToList();
 
             return Json(new
             {
@@ -188,6 +193,7 @@ private readonly IReservationService _reservationService;
                     patient = x.Patient.FullName,
                     phone = x.Patient.Phone,
                     doctor = x.Doctor.User.FirstName + " " + x.Doctor.User.LastName,
+                    date = x.ReservationDate.ToString("dd-MM-yyyy"),
                     day = x.Slot.Schedule.WeekDay,
                     time = x.Slot.SlotTime.ToString(@"hh\:mm"),
                     source = x.Source,
@@ -253,6 +259,7 @@ private readonly IReservationService _reservationService;
                 data = schedules.Select(x => new
                 {
                     doctor = x.Doctor.User.FirstName + " " + x.Doctor.User.LastName,
+                    speciality = x.Doctor?.Speciality?.Name ?? "",
                     day = x.WeekDay,
                     start = x.StartTime.ToString(@"hh\:mm"),
                     end = x.EndTime.ToString(@"hh\:mm")

@@ -333,10 +333,16 @@ namespace clinicsystem.Controllers
         {
             var schedules = await _scheduleService.GetAllWithDoctorsAsync();
 
+            var sortedSchedules = schedules
+                .OrderBy(s => s.Doctor.Speciality.Name)
+                .ThenBy(s => s.Doctor.User.FirstName)
+                .ThenBy(s => s.WeekDay)
+                .ThenBy(s => s.StartTime);
+
             return Json(new
             {
                 success = true,
-                data = schedules.Select(s => new
+                data = sortedSchedules.Select(s => new
                 {
                     doctor = $"{s.Doctor.User.FirstName} {s.Doctor.User.LastName}",
                     speciality = s.Doctor.Speciality.Name,

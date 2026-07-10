@@ -124,7 +124,7 @@ namespace clinicsystem.Controllers
                 return Json(new { success = false, message = "Doctor not found." });
 
             var reservations =
-                await _reservationService.GetDoctorReservationsForNotesAsync(doctor.DoctorId);
+                await _reservationService.GetDoctorTodayReservationsAsync(doctor.DoctorId);
 
             return Json(new
             {

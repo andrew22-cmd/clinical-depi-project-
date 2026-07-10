@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-    if (document.getElementById("doctorScheduleBody")) {
+    if (document.getElementById("doctorSchedulesGridPatient")) {
 
         loadDoctorsSchedulesPatient();
 
@@ -789,33 +789,37 @@ async function loadDoctorSchedules() {
     const doctors = {};
 
     data.forEach(item => {
-
         if (!doctors[item.doctor]) {
-            doctors[item.doctor] = [];
+            doctors[item.doctor] = {
+                name: item.doctor,
+                speciality: item.speciality,
+                schedules: []
+            };
         }
-
-        doctors[item.doctor].push(item);
-
+        doctors[item.doctor].schedules.push(item);
     });
 
-    Object.keys(doctors).forEach(doctor => {
+    Object.values(doctors).forEach(doc => {
 
         let schedules = "";
 
-        doctors[doctor].forEach(item => {
+        doc.schedules.forEach(item => {
 
             schedules += `
-                <div class="schedule-item">
-                    <span class="badge bg-primary">${item.day}</span>
-                    <span>${item.start} - ${item.end}</span>
+                <div class="schedule-item" style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                    <span class="badge bg-primary" style="padding:0.3rem 0.5rem; display:inline-block; border-radius:4px; font-size:0.8rem;">${item.day}</span>
+                    <span style="font-size:0.9rem;">${item.start} - ${item.end}</span>
                 </div>
             `;
 
         });
 
         grid.innerHTML += `
-            <div class="doctor-card">
-                <h4>👨‍⚕️ ${doctor}</h4>
+            <div class="doctor-card card" style="padding:15px; border-radius:8px; border:1px solid #eaeaea; box-shadow:0 2px 4px rgba(0,0,0,0.05);">
+                <h4 style="margin:0 0 5px 0; font-size:1.1rem; color:#1e293b;">👨‍⚕️ ${doc.name}</h4>
+                <small class="muted" style="display:block; margin-bottom:15px; font-weight:500; font-size:0.85rem; color:#64748b;">
+                    🩺 ${doc.speciality}
+                </small>
                 ${schedules}
             </div>
         `;
@@ -1024,24 +1028,16 @@ async function loadReservationTable() {
 
 <td>${item.doctor}</td>
 
-<td>${item.day}</td>
+<td>${item.day} <br><small style="color:#888;font-size:0.8rem;">${item.date}</small></td>
 
 <td>${item.time}</td>
 
 <td>${item.source}</td>
-
 <td>
-
-<button
-class="btn btn-danger"
-onclick="cancelReservation(${item.id})">
-
-Cancel
-
-</button>
-
+    <button class="btn btn-danger btn-sm" onclick="cancelReservation(${item.id})" style="padding: 0.2rem 1rem; font-size: 0.85rem;">
+        إلغاء
+    </button>
 </td>
-
 </tr>
 
 `;
@@ -1208,11 +1204,11 @@ async function loadPatientCheckups() {
 
     <h3>${item.speciality}</h3>
 
-    <small>${item.date}</small>
+    <small class="muted" style="display:block; margin-bottom:10px;">${item.date}</small>
 
-    <p><b>Diagnosis:</b> ${item.diagnosis}</p>
+    <p style="margin-bottom:8px;"><b>التشخيص:</b> ${item.diagnosis}</p>
 
-    <p><b>Notes:</b> ${item.notes}</p>
+    <p style="margin-bottom:0;"><b>الملاحظات:</b> ${item.notes}</p>
 
 </div>
 `;
@@ -1221,42 +1217,52 @@ async function loadPatientCheckups() {
 
 }
 async function loadDoctorsSchedulesPatient() {
+    const grid = document.getElementById("doctorSchedulesGridPatient");
 
-    const body = document.getElementById("doctorScheduleBody");
-
-    if (!body)
+    if (!grid)
         return;
 
-    const response =
-        await fetch("/Patient/GetDoctorsSchedules");
-
+    const response = await fetch("/Patient/GetDoctorsSchedules");
     let data = await response.json();
     if (data.data) data = data.data;
 
-    body.innerHTML = "";
+    grid.innerHTML = "";
+
+    const doctors = {};
 
     data.forEach(item => {
-
-        body.innerHTML += `
-
-<tr>
-
-<td>${item.doctor}</td>
-
-<td>${item.speciality}</td>
-
-<td>${item.day}</td>
-
-<td>${item.start}</td>
-
-<td>${item.end}</td>
-
-</tr>
-
-`;
-
+        if (!doctors[item.doctor]) {
+            doctors[item.doctor] = {
+                name: item.doctor,
+                speciality: item.speciality,
+                schedules: []
+            };
+        }
+        doctors[item.doctor].schedules.push(item);
     });
 
+    Object.values(doctors).forEach(doc => {
+        let schedules = "";
+
+        doc.schedules.forEach(item => {
+            schedules += `
+                <div class="schedule-item" style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                    <span class="badge bg-primary" style="padding:0.3rem 0.5rem; display:inline-block; border-radius:4px; font-size:0.8rem;">${item.day}</span>
+                    <span style="font-size:0.9rem;">${item.start} - ${item.end}</span>
+                </div>
+            `;
+        });
+
+        grid.innerHTML += `
+            <div class="doctor-card card" style="padding:15px; border-radius:8px; border:1px solid #eaeaea; box-shadow:0 2px 4px rgba(0,0,0,0.05);">
+                <h4 style="margin:0 0 5px 0; font-size:1.1rem; color:#1e293b;">👨‍⚕️ ${doc.name}</h4>
+                <small class="muted" style="display:block; margin-bottom:15px; font-weight:500; font-size:0.85rem; color:#64748b;">
+                    🩺 ${doc.speciality}
+                </small>
+                ${schedules}
+            </div>
+        `;
+    });
 }
 async function renderReservationsByDate() {
 

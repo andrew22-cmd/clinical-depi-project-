@@ -2,7 +2,7 @@
     Layout = null;
 }
 <!DOCTYPE html>
-<html lang="ar" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,25 +75,9 @@
             </section>
 
             <section class="card" style="margin-top:20px">
-
-                <h3>جدول الأطباء</h3>
-
-                <table class="table">
-
-                    <thead>
-                        <tr>
-                            <th>Doctor</th>
-                            <th>Speciality</th>
-                            <th>Day</th>
-                            <th>From</th>
-                            <th>To</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="doctorScheduleBody">
-                    </tbody>
-
-                </table>
+                <h3>📅 جدول الأطباء</h3>
+                <div id="doctorSchedulesGridPatient" class="calendar-grid" style="margin-top:1rem;"></div>
+            </section>
 
             </section>
         </main>
